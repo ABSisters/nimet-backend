@@ -29,10 +29,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HandlerMethodValidationException.class)
-    public ResponseEntity<ProblemDetail> senhaPadrao(HandlerMethodValidationException ex) {
+    public ResponseEntity<ProblemDetail> validacaoAtributos(HandlerMethodValidationException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         String title = ex.getReason() + ". Exception " + ex.getClass();
-        String detail = "Senha fraca (não cumpre com todos os requisitos)";
+        String detail = "Atributo não cumpre com todos os requisitos de validação";
 
         ProblemDetail problem = ProblemDetail.forStatus(status);
         problem.setTitle(title);

@@ -1,5 +1,6 @@
 package ABSisters.nimet.cadastro;
 
+import ABSisters.nimet.email.EmailService;
 import ABSisters.nimet.exception.UsuarioJaExiste;
 import com.google.common.hash.Hashing;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
+    private final EmailService emailService;
 
     public UsuarioDTO create(UsuarioPostRequestBody request) {
         if(usuarioRepository.existsByUsername(request.username())){
@@ -32,6 +34,8 @@ public class UsuarioService {
                 new Usuario(request.nome(), request.username(), request.email(), request.dataNascimento(), senha, request.curso()));
 
         log.info("Usuário com id " + usuario.getUsuarioId() + " realizou o cadastro.");
+
+        emailService.mandarEmail(usuario.getEmail(), usuario.getNome(), "http://localhost:4200/email/verificacao/" + usuario.getEmail());
 
         return usuarioMapper.to(usuario);
     }
