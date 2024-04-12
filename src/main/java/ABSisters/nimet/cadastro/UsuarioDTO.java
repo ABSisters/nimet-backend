@@ -8,8 +8,6 @@ public record UsuarioDTO (
         String nome,
         String username,
         String email,
-        boolean emailValido,
         Date dataNascimento,
-        String senha,
         Curso curso,
         TipoUsuario tipoUsuario) {}
