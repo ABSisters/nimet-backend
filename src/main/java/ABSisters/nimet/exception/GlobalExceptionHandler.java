@@ -55,4 +55,32 @@ public class GlobalExceptionHandler {
         log.warn(status + " " + detail);
         return new ResponseEntity<>(problem, status);
     }
+
+    @ExceptionHandler(UsuarioNaoExiste.class)
+    public ResponseEntity<ProblemDetail> usuarioNaoExiste(UsuarioNaoExiste ex) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        String title = "User not found. Exception: " + ex.getClass();
+        String detail = "Usuario com %s %s não existe".formatted(ex.getDetalhes(), ex.getIdentificador());
+
+        ProblemDetail problem = ProblemDetail.forStatus(status);
+        problem.setTitle(title);
+        problem.setDetail(detail);
+
+        log.warn(status + " " + detail);
+        return new ResponseEntity<>(problem, status);
+    }
+
+    @ExceptionHandler(EmailJaValidado.class)
+    public ResponseEntity<ProblemDetail> emailValidado(EmailJaValidado ex) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        String title = "Email has already been validated. Exception: " + ex.getClass();
+        String detail = "Usuario com email %s já foi validado".formatted(ex.getIdentificador());
+
+        ProblemDetail problem = ProblemDetail.forStatus(status);
+        problem.setTitle(title);
+        problem.setDetail(detail);
+
+        log.warn(status + " " + detail);
+        return new ResponseEntity<>(problem, status);
+    }
 }
