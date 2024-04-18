@@ -15,7 +15,7 @@ public class UsuarioCleanupService {
     private final UsuarioRepository usuarioRepository;
 
     //1000 = 1 segundo (300000 = 5 minutos)
-    @Scheduled(fixedRate = 100000)
+    @Scheduled(fixedRate = 300000)
     public void usuarioCleanup (){
         List<Usuario> usuarioEmailNaoFoiValidado = usuarioRepository.findAllByEmailValidoIsFalse();
 
