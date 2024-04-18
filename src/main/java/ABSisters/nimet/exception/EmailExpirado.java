@@ -6,12 +6,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Getter
 @ResponseStatus(HttpStatus.CONFLICT)
-public class UsuarioJaExiste extends RuntimeException{
-    private final String detalhes;
+public class EmailExpirado extends RuntimeException{
     private final String identificador;
 
-    public UsuarioJaExiste(String detalhes, String identificador) {
-        this.detalhes = detalhes;
+    public EmailExpirado(String identificador) {
         this.identificador = identificador;
     }
 }

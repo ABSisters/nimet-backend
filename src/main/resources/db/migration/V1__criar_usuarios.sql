@@ -1,7 +1,7 @@
 CREATE TABLE usuarios (
     usuario_id varchar2(32) NOT NULL,
     nome varchar2(100) NOT NULL,
-    username varchar2(100) NOT NULL,
+    username varchar2(20) NOT NULL,
     email varchar2(256) NOT NULL,
     email_valido number(1) NOT NULL,
     data_nascimento date NOT NULL,

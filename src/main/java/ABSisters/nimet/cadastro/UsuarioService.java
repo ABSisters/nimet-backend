@@ -1,7 +1,7 @@
 package ABSisters.nimet.cadastro;
 
 import ABSisters.nimet.email.EmailService;
-import ABSisters.nimet.exception.UsuarioJaExiste;
+import ABSisters.nimet.exception.ObjetoJaExiste;
 import com.google.common.hash.Hashing;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -17,13 +17,13 @@ public class UsuarioService {
     private final UsuarioMapper usuarioMapper;
     private final EmailService emailService;
 
-    public UsuarioDTO create(UsuarioPostRequestBody request) {
+    public UsuarioResponse create(UsuarioPostRequest request) {
         if(usuarioRepository.existsByUsername(request.username())){
-            throw new UsuarioJaExiste("username", request.username());
+            throw new ObjetoJaExiste("Usuário", "username", request.username());
         }
 
         if(usuarioRepository.existsByEmail(request.email())){
-            throw new UsuarioJaExiste("email", request.email());
+            throw new ObjetoJaExiste("Usuário", "email", request.email());
         }
 
         String senha = Hashing.sha256()

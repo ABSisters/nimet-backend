@@ -42,11 +42,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(problem, status);
     }
 
-    @ExceptionHandler(UsuarioJaExiste.class)
-    public ResponseEntity<ProblemDetail> usuarioExiste(UsuarioJaExiste ex) {
+    @ExceptionHandler(ObjetoJaExiste.class)
+    public ResponseEntity<ProblemDetail> objetoExiste(ObjetoJaExiste ex) {
         HttpStatus status = HttpStatus.CONFLICT;
-        String title = "User already exists. Exception: " + ex.getClass();
-        String detail = "Usuario com %s %s já existe".formatted(ex.getDetalhes(), ex.getIdentificador());
+        String title = "Already exists. Exception: " + ex.getClass();
+        String detail = "%s com %s %s já existe".formatted(ex.getObjeto() ,ex.getDetalhes(), ex.getIdentificador());
 
         ProblemDetail problem = ProblemDetail.forStatus(status);
         problem.setTitle(title);
@@ -56,11 +56,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(problem, status);
     }
 
-    @ExceptionHandler(UsuarioNaoExiste.class)
-    public ResponseEntity<ProblemDetail> usuarioNaoExiste(UsuarioNaoExiste ex) {
+    @ExceptionHandler(ObjetoNaoExiste.class)
+    public ResponseEntity<ProblemDetail> objetoNaoExiste(ObjetoNaoExiste ex) {
         HttpStatus status = HttpStatus.NOT_FOUND;
-        String title = "User not found. Exception: " + ex.getClass();
-        String detail = "Usuario com %s %s não existe".formatted(ex.getDetalhes(), ex.getIdentificador());
+        String title = "Not found. Exception: " + ex.getClass();
+        String detail = "%s com %s %s não existe".formatted(ex.getObjeto(), ex.getDetalhes(), ex.getIdentificador());
 
         ProblemDetail problem = ProblemDetail.forStatus(status);
         problem.setTitle(title);
@@ -75,6 +75,20 @@ public class GlobalExceptionHandler {
         HttpStatus status = HttpStatus.CONFLICT;
         String title = "Email has already been validated. Exception: " + ex.getClass();
         String detail = "Usuario com email %s já foi validado".formatted(ex.getIdentificador());
+
+        ProblemDetail problem = ProblemDetail.forStatus(status);
+        problem.setTitle(title);
+        problem.setDetail(detail);
+
+        log.warn(status + " " + detail);
+        return new ResponseEntity<>(problem, status);
+    }
+
+    @ExceptionHandler(EmailExpirado.class)
+    public ResponseEntity<ProblemDetail> emailExpirado(EmailExpirado ex) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        String title = "Email has expired. Exception: " + ex.getClass();
+        String detail = "Usuario com email %s teve seu tempo de verificação de email expirado".formatted(ex.getIdentificador());
 
         ProblemDetail problem = ProblemDetail.forStatus(status);
         problem.setTitle(title);
