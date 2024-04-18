@@ -3,7 +3,8 @@ package ABSisters.nimet.cadastro;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -20,7 +21,7 @@ public class Usuario {
     private String username;
     private String email;
     private boolean emailValido;
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
     private String senha;
 
     @Enumerated(EnumType.STRING)
@@ -29,7 +30,9 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
 
-    public Usuario(String nome, String username, String email, Date dataNascimento, String senha, Curso curso){
+    private LocalDateTime dataCriado;
+
+    public Usuario(String nome, String username, String email, LocalDate dataNascimento, String senha, Curso curso){
         this.usuarioId = UUID.randomUUID();
         this.nome = nome;
         this.username = username;
@@ -39,5 +42,6 @@ public class Usuario {
         this.senha = senha;
         this.curso = curso;
         this.tipoUsuario = TipoUsuario.ESTUDANTE;
+        this.dataCriado = LocalDateTime.now();
     }
 }

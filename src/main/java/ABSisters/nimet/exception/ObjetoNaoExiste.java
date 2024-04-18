@@ -6,11 +6,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Getter
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class UsuarioNaoExiste extends RuntimeException{
+public class ObjetoNaoExiste extends RuntimeException{
+    private final String objeto;
     private final String detalhes;
     private final String identificador;
 
-    public UsuarioNaoExiste(String detalhes, String identificador) {
+    public ObjetoNaoExiste(String objeto, String detalhes, String identificador) {
+        this.objeto = objeto;
         this.detalhes = detalhes;
         this.identificador = identificador;
     }

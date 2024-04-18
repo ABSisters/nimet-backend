@@ -14,7 +14,7 @@ public class UsuarioController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public UsuarioDTO post(@RequestBody @Valid @NotNull UsuarioPostRequestBody usuario) {
+    public UsuarioResponse post(@RequestBody @Valid @NotNull UsuarioPostRequest usuario) {
         return usuarioService.create(usuario);
     }
 }
