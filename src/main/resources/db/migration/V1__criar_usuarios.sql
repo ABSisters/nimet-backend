@@ -8,5 +8,6 @@ CREATE TABLE usuarios (
     senha varchar2(64) NOT NULL,
     curso varchar2(20) NOT NULL CHECK( curso IN ('ELETRONICA','INFORMATICA','MECANICA')),
     tipo_usuario varchar2(20) NOT NULL CHECK( tipo_usuario IN ('ESTUDANTE','MODERADOR')),
+    data_criado date NOT NULL,
     CONSTRAINT usuario_pk PRIMARY KEY (usuario_id)
 );
