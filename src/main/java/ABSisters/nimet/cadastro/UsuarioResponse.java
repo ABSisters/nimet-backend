@@ -2,10 +2,9 @@ package ABSisters.nimet.cadastro;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public record UsuarioResponse(
-        UUID usuarioId,
+        String usuarioId,
         String nome,
         String username,
         String email,
