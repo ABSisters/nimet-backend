@@ -15,7 +15,7 @@ import java.util.UUID;
 @Setter
 public class Usuario {
     @Id
-    private UUID usuarioId;
+    private String usuarioId;
 
     private String nome;
     private String username;
@@ -33,7 +33,7 @@ public class Usuario {
     private LocalDateTime dataCriado;
 
     public Usuario(String nome, String username, String email, LocalDate dataNascimento, String senha, Curso curso){
-        this.usuarioId = UUID.randomUUID();
+        this.usuarioId = UUID.randomUUID().toString();
         this.nome = nome;
         this.username = username;
         this.email = email;
