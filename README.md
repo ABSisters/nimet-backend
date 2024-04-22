@@ -14,6 +14,8 @@
 ### Para adicionar o SQL Developer:
 * Primeiro instale a Oracle Database Express Edition (XE): https://www.oracle.com/database/technologies/xe-downloads.html
 * Depois instale o SQL Developer: https://www.oracle.com/database/sqldeveloper/technologies/download/
+> [!NOTE]
+> Vídeo tutorial para a instalação do Oracle Database XE e SQL Developer: https://www.youtube.com/watch?v=0POvGPBz_Xg
 * Abra o SQL Developer (está na pasta baixada, sendo que o aplicativo tem como nome sqldeveloper) e crie uma conexão em Oracle Conexões com o nome `nimet`, nome de usuário `system` e senha `password`
 > [!WARNING]
 > As tabelas necessárias para o projeto serão criadas ao rodar o projeto na IDE. O esquema das tabelas podem ser achados no repositório em: src/main/resources/db/migration
