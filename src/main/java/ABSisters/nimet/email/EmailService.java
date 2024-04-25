@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class EmailService {
 
-    private final JavaMailSender mailSender;
+    private JavaMailSender mailSender;
 
     public void mandarEmail(String emailUsuario, String nomeUsuario, String link) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -23,6 +23,6 @@ public class EmailService {
 
         mailSender.send(message);
 
-        log.info("Usuário com email " + emailUsuario + " recebeu o email de validação.");
+        //log.info("Usuário com email " + emailUsuario + " recebeu o email de validação.");
     }
 }
