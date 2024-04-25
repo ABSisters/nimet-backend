@@ -38,7 +38,7 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.save(
                 new Usuario(request.nome(), request.username(), request.email(), request.dataNascimento(), senha, request.curso()));
 
-        log.info("Usuário com id " + usuario.getUsuarioId() + " realizou o cadastro.");
+       // log.info("Usuário com id " + usuario.getUsuarioId() + " realizou o cadastro.");
 
         emailService.mandarEmail(usuario.getEmail(), usuario.getNome(), "http://localhost:4200/email/verificacao/" + usuario.getEmail());
 
@@ -46,14 +46,14 @@ public class UsuarioService {
     }
     
 
-	public Usuario login(String email, String username, String senha, UsuarioPostRequest request) {
+	public Usuario login(String email, String senha, UsuarioPostRequest request) {
 
 		Usuario usuario;
     	if(!usuarioRepository.existsByEmail(request.email()) || !usuarioRepository.existsByUsername(request.username())){
-    		log.info("Usuário não encontrado.");
+    	//	log.info("Usuário não encontrado.");
     	}
     	Usuario usuarioLog = usuarioRepository.loginByEmail(email, senha);
-    	log.info("Usuário logado.");
+    	//log.info("Usuário logado.");
 
     	
 		return usuarioLog;
