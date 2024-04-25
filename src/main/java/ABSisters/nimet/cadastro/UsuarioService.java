@@ -1,21 +1,26 @@
 package ABSisters.nimet.cadastro;
 
-import ABSisters.nimet.email.EmailService;
-import ABSisters.nimet.exception.ObjetoJaExiste;
-import com.google.common.hash.Hashing;
-import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Service;
+//import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.nio.charset.StandardCharsets;
+
+import org.springframework.stereotype.Service;
+
+import com.google.common.hash.Hashing;
+
+import ABSisters.nimet.email.EmailService;
+import ABSisters.nimet.exception.ObjetoJaExiste;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service
 @AllArgsConstructor
 @Log4j2
 public class UsuarioService {
-    private final UsuarioRepository usuarioRepository;
-    private final UsuarioMapper usuarioMapper;
-    private final EmailService emailService;
+    private UsuarioRepository usuarioRepository;
+    private UsuarioMapper usuarioMapper;
+    private EmailService emailService;
+    private UsuarioResponse userResponse;
 
     public UsuarioResponse create(UsuarioPostRequest request) {
         if(usuarioRepository.existsByUsername(request.username())){
@@ -39,4 +44,18 @@ public class UsuarioService {
 
         return usuarioMapper.to(usuario);
     }
+    
+
+	public Usuario login(String email, String username, String senha, UsuarioPostRequest request) {
+
+		Usuario usuario;
+    	if(!usuarioRepository.existsByEmail(request.email()) || !usuarioRepository.existsByUsername(request.username())){
+    		log.info("Usuário não encontrado.");
+    	}
+    	Usuario usuarioLog = usuarioRepository.loginByEmail(email, senha);
+    	log.info("Usuário logado.");
+
+    	
+		return usuarioLog;
+	}
 }
