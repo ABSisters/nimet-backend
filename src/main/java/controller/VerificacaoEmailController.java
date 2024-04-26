@@ -1,6 +1,8 @@
-package ABSisters.nimet.email.verificacao;
+package controller;
 
 import lombok.AllArgsConstructor;
+import service.VerificacaoEmailService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

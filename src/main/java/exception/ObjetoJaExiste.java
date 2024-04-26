@@ -1,4 +1,4 @@
-package ABSisters.nimet.exception;
+package exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

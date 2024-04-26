@@ -1,31 +1,34 @@
-package ABSisters.nimet.email.verificacao;
-
-import ABSisters.nimet.cadastro.Usuario;
-import ABSisters.nimet.cadastro.UsuarioRepository;
-import ABSisters.nimet.exception.EmailExpirado;
-import ABSisters.nimet.exception.EmailJaValidado;
-import ABSisters.nimet.exception.ObjetoNaoExiste;
-import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+package service;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import ABSisters.nimet.cadastro.UsuarioRepository;
+import domain.Usuario;
+import exception.EmailExpirado;
+import exception.EmailJaValidado;
+import exception.ObjetoNaoExiste;
+import lombok.AllArgsConstructor;
+
 @Service
 @AllArgsConstructor
-@Log4j2
 public class VerificacaoEmailService {
-    private final UsuarioRepository usuarioRepository;
 
-    public ResponseEntity validarEmail(String emailUsuario) {
+	@Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @SuppressWarnings("rawtypes")
+	public ResponseEntity validarEmail(String emailUsuario) {
         Usuario usuario = usuarioRepository.findByEmail(emailUsuario);
 
         if (usuario == null) {
             throw new ObjetoNaoExiste("Usuário", "email", emailUsuario);
         }
 
-        if (usuario.isEmailValido() == true) {
+        if (usuario.getEmailValido() == true) {
             throw new EmailJaValidado(emailUsuario);
         }
 
@@ -38,8 +41,8 @@ public class VerificacaoEmailService {
         usuario.setEmailValido(true);
         usuarioRepository.save(usuario);
 
-        log.info("Email " + emailUsuario + " foi validado");
+        //log.info("Email " + emailUsuario + " foi validado");
 
-        return ResponseEntity.ok().body(usuario.isEmailValido());
+        return ResponseEntity.ok().body(usuario.getEmailValido());
     }
 }

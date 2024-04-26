@@ -1,4 +1,4 @@
-package ABSisters.nimet.cadastro;
+package service;
 
 //import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.hash.Hashing;
 
-import ABSisters.nimet.email.EmailService;
-import ABSisters.nimet.exception.ObjetoJaExiste;
+import ABSisters.nimet.cadastro.UsuarioMapper;
+import ABSisters.nimet.cadastro.UsuarioPostRequest;
+import ABSisters.nimet.cadastro.UsuarioRepository;
+import ABSisters.nimet.cadastro.UsuarioResponse;
+import domain.Usuario;
+import exception.ObjetoJaExiste;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -36,7 +40,7 @@ public class UsuarioService {
                 .toString();
 
         Usuario usuario = usuarioRepository.save(
-                new Usuario(request.nome(), request.username(), request.email(), request.dataNascimento(), senha, request.curso()));
+                 new Usuario(request.nome(), request.username(), request.email(), request.dataNascimento(), senha, request.curso()));
 
        // log.info("Usuário com id " + usuario.getUsuarioId() + " realizou o cadastro.");
 

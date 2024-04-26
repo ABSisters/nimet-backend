@@ -1,4 +1,4 @@
-package ABSisters.nimet.exception;
+package exception;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
         problem.setTitle(title);
         problem.setDetail(detail);
 
-        log.warn(status + " " + detail);
+        //log.warn(status + " " + detail);
         return new ResponseEntity<>(problem, status);
     }
 
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
         problem.setTitle(title);
         problem.setDetail(detail);
 
-        log.warn(status + " " + detail);
+        //log.warn(status + " " + detail);
         return new ResponseEntity<>(problem, status);
     }
 
@@ -46,13 +46,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ProblemDetail> objetoExiste(ObjetoJaExiste ex) {
         HttpStatus status = HttpStatus.CONFLICT;
         String title = "Already exists. Exception: " + ex.getClass();
-        String detail = "%s com %s %s já existe".formatted(ex.getObjeto() ,ex.getDetalhes(), ex.getIdentificador());
+        //String detail = "%s com %s %s já existe".formatted(ex.getObjeto() ,ex.getDetalhes(), ex.getIdentificador());
 
         ProblemDetail problem = ProblemDetail.forStatus(status);
         problem.setTitle(title);
-        problem.setDetail(detail);
+        //problem.setDetail(detail);
 
-        log.warn(status + " " + detail);
+        //log.warn(status + " " + detail);
         return new ResponseEntity<>(problem, status);
     }
 
@@ -60,13 +60,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ProblemDetail> objetoNaoExiste(ObjetoNaoExiste ex) {
         HttpStatus status = HttpStatus.NOT_FOUND;
         String title = "Not found. Exception: " + ex.getClass();
-        String detail = "%s com %s %s não existe".formatted(ex.getObjeto(), ex.getDetalhes(), ex.getIdentificador());
+        //String detail = "%s com %s %s não existe".formatted(ex.getObjeto(), ex.getDetalhes(), ex.getIdentificador());
 
         ProblemDetail problem = ProblemDetail.forStatus(status);
         problem.setTitle(title);
-        problem.setDetail(detail);
+        //problem.setDetail(detail);
 
-        log.warn(status + " " + detail);
+        //log.warn(status + " " + detail);
         return new ResponseEntity<>(problem, status);
     }
 
@@ -80,7 +80,7 @@ public class GlobalExceptionHandler {
         problem.setTitle(title);
         problem.setDetail(detail);
 
-        log.warn(status + " " + detail);
+        //log.warn(status + " " + detail);
         return new ResponseEntity<>(problem, status);
     }
 
@@ -88,13 +88,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ProblemDetail> emailExpirado(EmailExpirado ex) {
         HttpStatus status = HttpStatus.CONFLICT;
         String title = "Email has expired. Exception: " + ex.getClass();
-        String detail = "Usuario com email %s teve seu tempo de verificação de email expirado".formatted(ex.getIdentificador());
+        //String detail = "Usuario com email %s teve seu tempo de verificação de email expirado".formatted(ex.getIdentificador());
 
         ProblemDetail problem = ProblemDetail.forStatus(status);
         problem.setTitle(title);
-        problem.setDetail(detail);
+        //problem.setDetail(detail);
 
-        log.warn(status + " " + detail);
+        //log.warn(status + " " + detail);
         return new ResponseEntity<>(problem, status);
     }
 }

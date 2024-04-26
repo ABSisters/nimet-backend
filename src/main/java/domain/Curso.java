@@ -1,7 +1,8 @@
-package ABSisters.nimet.cadastro;
+package domain;
 
 public enum Curso {
     ELETRONICA,
     INFORMATICA,
     MECANICA
 }
+

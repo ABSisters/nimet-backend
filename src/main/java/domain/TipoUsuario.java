@@ -1,4 +1,4 @@
-package ABSisters.nimet.cadastro;
+package domain;
 
 public enum TipoUsuario {
     ESTUDANTE,

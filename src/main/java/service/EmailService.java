@@ -1,17 +1,14 @@
-package ABSisters.nimet.email;
+package service;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-@Log4j2
-@AllArgsConstructor
 public class EmailService {
 
     private JavaMailSender mailSender;
+    //private static Logger logger = LogManager.getLogger(EmailService.class);
 
     public void mandarEmail(String emailUsuario, String nomeUsuario, String link) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -23,6 +20,6 @@ public class EmailService {
 
         mailSender.send(message);
 
-        //log.info("Usuário com email " + emailUsuario + " recebeu o email de validação.");
+       //log.info("Usuário com email " + emailUsuario + " recebeu o email de validação.");
     }
 }

@@ -1,4 +1,4 @@
-package ABSisters.nimet.cadastro;
+package domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -83,7 +83,7 @@ public class Usuario {
 		return emailValido;
 	}
 	
-	public boolean setEmailValido() {
+	public boolean setEmailValido(boolean b) {
 		return this.emailValido;
 	}
 	
@@ -127,3 +127,4 @@ public class Usuario {
 		return this.dataCriado;
 	}
 }
+

@@ -1,6 +1,7 @@
 package ABSisters.nimet.cadastro;
 
 import jakarta.validation.constraints.*;
+import util.Curso;
 
 import java.time.LocalDate;
 
