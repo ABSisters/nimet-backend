@@ -1,4 +1,4 @@
-package service;
+package absisters.nimet.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import ABSisters.nimet.cadastro.UsuarioRepository;
-import domain.Usuario;
+import absisters.nimet.domain.Usuario;
+import absisters.nimet.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 

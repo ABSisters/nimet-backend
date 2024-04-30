@@ -1,4 +1,4 @@
-package service;
+package absisters.nimet.service;
 
 import java.time.LocalDateTime;
 
@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import ABSisters.nimet.cadastro.UsuarioRepository;
-import domain.Usuario;
-import exception.EmailExpirado;
-import exception.EmailJaValidado;
-import exception.ObjetoNaoExiste;
+import absisters.nimet.domain.Usuario;
+import absisters.nimet.exception.EmailExpirado;
+import absisters.nimet.exception.EmailJaValidado;
+import absisters.nimet.exception.ObjetoNaoExiste;
+import absisters.nimet.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 
 @Service

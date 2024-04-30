@@ -1,8 +1,9 @@
-package ABSisters.nimet.cadastro;
+package absisters.nimet.dto;
 
 import org.mapstruct.Mapper;
 
-import util.Usuario;
+import absisters.nimet.domain.Usuario;
+
 
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {

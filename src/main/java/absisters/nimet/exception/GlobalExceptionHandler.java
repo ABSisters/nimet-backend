@@ -1,4 +1,4 @@
-package exception;
+package absisters.nimet.exception;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

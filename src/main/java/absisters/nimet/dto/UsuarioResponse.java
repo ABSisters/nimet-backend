@@ -1,10 +1,10 @@
-package ABSisters.nimet.cadastro;
+package absisters.nimet.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import domain.Curso;
-import domain.TipoUsuario;
+import absisters.nimet.domain.Curso;
+import absisters.nimet.domain.TipoUsuario;
 
 public record UsuarioResponse(
         String usuarioId,

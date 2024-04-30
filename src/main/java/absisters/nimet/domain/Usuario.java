@@ -1,4 +1,4 @@
-package domain;
+package absisters.nimet.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -47,6 +47,10 @@ public class Usuario {
     }
 
 
+    public Usuario() {
+		// TODO Auto-generated constructor stub
+	}
+    
 	public String getUsuarioId() {
 		return usuarioId;
 	}

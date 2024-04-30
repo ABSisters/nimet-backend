@@ -1,9 +1,11 @@
-package ABSisters.nimet.cadastro;
-
-import jakarta.validation.constraints.*;
-import util.Curso;
+package absisters.nimet.dto;
 
 import java.time.LocalDate;
+
+import absisters.nimet.domain.Curso;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public record UsuarioPostRequest(
         @NotNull @Size(max = 100) String nome,
