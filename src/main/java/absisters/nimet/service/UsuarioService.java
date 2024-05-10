@@ -5,6 +5,8 @@ package absisters.nimet.service;
 import java.nio.charset.StandardCharsets;
 
 import absisters.nimet.domain.EmailToken;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +19,9 @@ import absisters.nimet.dto.UsuarioResponse;
 import absisters.nimet.exception.ObjetoJaExiste;
 import absisters.nimet.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @Service
 @AllArgsConstructor
-@Log4j2
 public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -34,6 +34,8 @@ public class UsuarioService {
 
 	//	@Autowired
 	//    private UsuarioResponse userResponse;
+
+	private static Logger logger = LogManager.getLogger();
 
 	public UsuarioResponse create(UsuarioPostRequest request) {
 		if(usuarioRepository.existsByUsername(request.username())){
@@ -51,6 +53,7 @@ public class UsuarioService {
 		Usuario usuario = usuarioRepository.save(
 				new Usuario(request.nome(), request.username(), request.email(), request.dataNascimento(), senha, request.curso()));
 		// log.info("Usuário com id " + usuario.getUsuarioId() + " realizou o cadastro.");
+		logger.info("Usuário com id " + usuario.getUsuarioId() + " realizou o cadastro.");
 
 		EmailToken emailToken = emailService.criarToken(usuario);
 
