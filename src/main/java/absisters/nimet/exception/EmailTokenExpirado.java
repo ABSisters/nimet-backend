@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Getter
 @ResponseStatus(HttpStatus.CONFLICT)
-public class EmailExpirado extends RuntimeException{
+public class EmailTokenExpirado extends RuntimeException{
     private final String identificador;
 
-    public EmailExpirado(String identificador) {
+    public EmailTokenExpirado(String identificador) {
         this.identificador = identificador;
     }
 }

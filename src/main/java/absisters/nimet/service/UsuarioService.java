@@ -4,6 +4,7 @@ package absisters.nimet.service;
 
 import java.nio.charset.StandardCharsets;
 
+import absisters.nimet.domain.EmailToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,10 +50,11 @@ public class UsuarioService {
 
 		Usuario usuario = usuarioRepository.save(
 				new Usuario(request.nome(), request.username(), request.email(), request.dataNascimento(), senha, request.curso()));
-
 		// log.info("Usuário com id " + usuario.getUsuarioId() + " realizou o cadastro.");
 
-		emailService.mandarEmail(usuario.getEmail(), usuario.getNome(), "http://localhost:4200/email" + usuario.getEmail());
+		EmailToken emailToken = emailService.criarToken(usuario);
+
+		emailService.mandarEmail(usuario, emailToken);
 
 		return usuarioMapper.to(usuario);
 	}

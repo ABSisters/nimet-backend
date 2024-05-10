@@ -9,11 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "usuarios")
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-@Getter
-@Setter
 public class Usuario {
     @Id
     private String usuarioId;
@@ -21,7 +17,7 @@ public class Usuario {
     private String nome;
     private String username;
     private String email;
-    private boolean emailValido;
+    private Boolean emailValido;
     private LocalDate dataNascimento;
     private String senha;
 
@@ -50,85 +46,85 @@ public class Usuario {
     public Usuario() {
 		// TODO Auto-generated constructor stub
 	}
-    
+
 	public String getUsuarioId() {
 		return usuarioId;
 	}
-	
-	public String setUsuarioId() {
-		return this.usuarioId;
+
+	public void setUsuarioId(String usuarioId) {
+		this.usuarioId = usuarioId;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-	
-	public String setNome() {
-		return this.nome;
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}
-	
-	public String setUserName() {
-		return this.username;
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
-	public String setEmail() {
-		return this.email;
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	
-	public boolean getEmailValido() {
+
+	public Boolean getEmailValido() {
 		return emailValido;
 	}
-	
-	public boolean setEmailValido(boolean b) {
-		return this.emailValido;
+
+	public void setEmailValido(Boolean emailValido) {
+		this.emailValido = emailValido;
 	}
-	
+
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
-	
-	public LocalDate setDataNascimento() {
-		return this.dataNascimento;
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
-	
+
 	public String getSenha() {
 		return senha;
 	}
-	
-	public String setSenha() {
-		return this.senha;
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
-	
+
 	public Curso getCurso() {
 		return curso;
 	}
-	
-	public Curso setCurso() {
-		return this.curso;
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 	}
-	
+
 	public TipoUsuario getTipoUsuario() {
 		return tipoUsuario;
 	}
-	
-	public TipoUsuario setTipoUsuario() {
-		return this.tipoUsuario;
+
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
 	}
-	
+
 	public LocalDateTime getDataCriado() {
 		return dataCriado;
 	}
 
-	public LocalDateTime setDataCriado() {
-		return this.dataCriado;
+	public void setDataCriado(LocalDateTime dataCriado) {
+		this.dataCriado = dataCriado;
 	}
 }
 

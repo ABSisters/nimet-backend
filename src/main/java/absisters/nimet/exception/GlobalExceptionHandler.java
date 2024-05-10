@@ -84,11 +84,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(problem, status);
     }
 
-    @ExceptionHandler(EmailExpirado.class)
-    public ResponseEntity<ProblemDetail> emailExpirado(EmailExpirado ex) {
+    @ExceptionHandler(EmailTokenExpirado.class)
+    public ResponseEntity<ProblemDetail> emailTokenExpirado(EmailTokenExpirado ex) {
         HttpStatus status = HttpStatus.CONFLICT;
-        String title = "Email has expired. Exception: " + ex.getClass();
-        //String detail = "Usuario com email %s teve seu tempo de verificação de email expirado".formatted(ex.getIdentificador());
+        String title = "Email token has expired. Exception: " + ex.getClass();
+        //String detail = "Token com id %s teve seu tempo de verificação expirado".formatted(ex.getIdentificador());
 
         ProblemDetail problem = ProblemDetail.forStatus(status);
         problem.setTitle(title);
