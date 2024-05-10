@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ProblemDetail> erroEnum(HttpMessageNotReadableException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        String title = ex.getLocalizedMessage() + ". Exception " + ex.getClass();;
+        String title = ex.getLocalizedMessage() + ". Exception " + ex.getClass();
         String detail = "Não é um dos valores aceitos para a classe Enum";
 
         ProblemDetail problem = ProblemDetail.forStatus(status);
