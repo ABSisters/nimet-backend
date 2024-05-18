@@ -5,6 +5,8 @@ package absisters.nimet.service;
 import java.nio.charset.StandardCharsets;
 
 import absisters.nimet.domain.EmailToken;
+import absisters.nimet.dto.UsuarioPutRequest;
+import absisters.nimet.exception.ObjetoNaoExiste;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,4 +82,35 @@ public class UsuarioService {
 	}
 
 
+	public UsuarioResponse update(String id, UsuarioPutRequest request) {
+		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(id);
+
+		if(mudarUsuario == null){
+			throw new ObjetoNaoExiste("Usuário", "id", id);
+		}
+
+		if(usuarioRepository.existsByUsernameAndUsuarioIdNot(request.username(), id)){
+			throw new ObjetoJaExiste("Usuário", "username", request.username());
+		}
+
+		if(usuarioRepository.existsByEmailAndUsuarioIdNot(request.email(), id)){
+			throw new ObjetoJaExiste("Usuário", "email", request.email());
+		}
+
+		String senha = Hashing.sha256()
+				.hashString(request.senha(), StandardCharsets.UTF_8)
+				.toString();
+
+		mudarUsuario.setNome(request.nome());
+		mudarUsuario.setUsername(request.username());
+		mudarUsuario.setEmail(request.email());
+		mudarUsuario.setDataNascimento(request.dataNascimento());
+		mudarUsuario.setSenha(senha);
+		mudarUsuario.setCurso(request.curso());
+
+		Usuario usuario = usuarioRepository.save(mudarUsuario);
+		logger.info("Usuário com id " + usuario.getUsuarioId() + " foi mudado.");
+
+		return usuarioMapper.to(usuario);
+	}
 }

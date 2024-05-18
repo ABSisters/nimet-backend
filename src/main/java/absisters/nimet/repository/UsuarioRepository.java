@@ -13,7 +13,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, String> {
 
     boolean existsByUsername(String username);
     boolean existsByEmail(String email);
+    boolean existsByUsernameAndUsuarioIdNot(String username, String id);
+    boolean existsByEmailAndUsuarioIdNot(String email, String id);
     Usuario findByEmail(String email);
+    Usuario findByUsuarioId(String id);
     List<Usuario> findAllByEmailValidoIsFalse();
     
 	@Query ( "select u from Usuario u  where u.email = :email and u.senha= :senha" )
