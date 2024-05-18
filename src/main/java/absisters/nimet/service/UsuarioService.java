@@ -52,7 +52,6 @@ public class UsuarioService {
 
 		Usuario usuario = usuarioRepository.save(
 				new Usuario(request.nome(), request.username(), request.email(), request.dataNascimento(), senha, request.curso()));
-		// log.info("Usuário com id " + usuario.getUsuarioId() + " realizou o cadastro.");
 		logger.info("Usuário com id " + usuario.getUsuarioId() + " realizou o cadastro.");
 
 		EmailToken emailToken = emailService.criarToken(usuario);
@@ -69,10 +68,10 @@ public class UsuarioService {
 
 		if (usuarioRepository.existsByEmail(login)) {
 			usuario = usuarioRepository.loginByEmail(login, senha);
-			// log.info("Usuário logado com email");	        
+			logger.info("Usuário logado com email");
 		} else if (usuarioRepository.existsByUsername(login)) {
 			usuario = usuarioRepository.loginByUsername(login, senha);
-			// log.info("Usuário logado com username");
+			logger.info("Usuário logado com username");
 		} else {
 			throw new Exception("Usuário não encontrado");
 		}

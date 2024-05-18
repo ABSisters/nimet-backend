@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import absisters.nimet.domain.EmailToken;
 import absisters.nimet.dto.VerificacaoEmailRequest;
 import absisters.nimet.repository.EmailTokenRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class VerificacaoEmailService {
 
     @Autowired
     private EmailTokenRepository emailTokenRepository;
+
+    private static Logger logger = LogManager.getLogger();
 
     @SuppressWarnings("rawtypes")
 	public ResponseEntity validarEmail(VerificacaoEmailRequest request) {
@@ -53,7 +57,7 @@ public class VerificacaoEmailService {
         usuario.setEmailValido(true);
         usuarioRepository.save(usuario);
 
-        //log.info("Email " + emailUsuario + " foi validado");
+        logger.info("Email " + usuario.getEmail() + " foi validado");
 
         return ResponseEntity.ok().body(usuario.getEmailValido());
     }
