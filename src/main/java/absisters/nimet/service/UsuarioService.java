@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import absisters.nimet.domain.EmailToken;
 import absisters.nimet.dto.UsuarioPutRequest;
 import absisters.nimet.exception.ObjetoNaoExiste;
+import absisters.nimet.repository.EmailTokenRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class UsuarioService {
 
 	@Autowired
 	private EmailService emailService;
+
+	@Autowired
+	private EmailTokenRepository emailTokenRepository;
 
 	//	@Autowired
 	//    private UsuarioResponse userResponse;
@@ -112,5 +116,23 @@ public class UsuarioService {
 		logger.info("Usuário com id " + usuario.getUsuarioId() + " foi mudado.");
 
 		return usuarioMapper.to(usuario);
+	}
+
+
+	public void delete(String id) {
+		Usuario usuario = usuarioRepository.findByUsuarioId(id);
+
+		if(usuario == null){
+			throw new ObjetoNaoExiste("Usuário", "id", id);
+		}
+
+		EmailToken emailToken= emailTokenRepository.findByUsuario(usuario);
+		if (emailToken != null) {
+			emailTokenRepository.delete(emailToken);
+			logger.info("Token com id " + emailToken.getTokenId() + " foi deletado em conjunto com o usuario com id " + usuario.getUsuarioId());
+		}
+
+		usuarioRepository.delete(usuario);
+		logger.info("Usuario com id " + usuario.getUsuarioId() + " foi deletado");
 	}
 }
