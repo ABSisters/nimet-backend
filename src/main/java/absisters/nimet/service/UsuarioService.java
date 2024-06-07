@@ -3,9 +3,10 @@ package absisters.nimet.service;
 //import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import absisters.nimet.domain.EmailToken;
-import absisters.nimet.dto.UsuarioPutRequest;
+import absisters.nimet.dto.*;
 import absisters.nimet.exception.ObjetoNaoExiste;
 import absisters.nimet.repository.EmailTokenRepository;
 import org.apache.logging.log4j.LogManager;
@@ -16,9 +17,6 @@ import org.springframework.stereotype.Service;
 import com.google.common.hash.Hashing;
 
 import absisters.nimet.domain.Usuario;
-import absisters.nimet.dto.UsuarioMapper;
-import absisters.nimet.dto.UsuarioPostRequest;
-import absisters.nimet.dto.UsuarioResponse;
 import absisters.nimet.exception.ObjetoJaExiste;
 import absisters.nimet.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
@@ -93,24 +91,48 @@ public class UsuarioService {
 			throw new ObjetoNaoExiste("Usuário", "id", id);
 		}
 
-		if(usuarioRepository.existsByUsernameAndUsuarioIdNot(request.username(), id)){
-			throw new ObjetoJaExiste("Usuário", "username", request.username());
+		if(!Objects.equals(mudarUsuario.getUsername(), request.username())){
+			if(usuarioRepository.existsByUsernameAndUsuarioIdNot(request.username(), id)){
+				throw new ObjetoJaExiste("Usuário", "username", request.username());
+			}
 		}
 
-		if(usuarioRepository.existsByEmailAndUsuarioIdNot(request.email(), id)){
-			throw new ObjetoJaExiste("Usuário", "email", request.email());
+        if(!Objects.equals(mudarUsuario.getEmail(), request.email())){
+			if(usuarioRepository.existsByEmailAndUsuarioIdNot(request.email(), id)){
+				throw new ObjetoJaExiste("Usuário", "email", request.email());
+			}
+
+            mudarUsuario.setEmailValido(false);
+            mudarUsuario.setEmail(request.email());
+
+            EmailToken emailToken = emailService.criarToken(mudarUsuario);
+            emailService.mandarEmail(mudarUsuario, emailToken);
+        }
+
+		mudarUsuario.setNome(request.nome());
+		mudarUsuario.setUsername(request.username());
+		mudarUsuario.setDataNascimento(request.dataNascimento());
+		mudarUsuario.setCurso(request.curso());
+
+		Usuario usuario = usuarioRepository.save(mudarUsuario);
+		logger.info("Usuário com id " + usuario.getUsuarioId() + " foi mudado.");
+
+		return usuarioMapper.to(usuario);
+	}
+
+
+	public UsuarioResponse updateSenha(String id, UsuarioPutSenhaRequest request) {
+		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(id);
+
+		if(mudarUsuario == null){
+			throw new ObjetoNaoExiste("Usuário", "id", id);
 		}
 
 		String senha = Hashing.sha256()
 				.hashString(request.senha(), StandardCharsets.UTF_8)
 				.toString();
 
-		mudarUsuario.setNome(request.nome());
-		mudarUsuario.setUsername(request.username());
-		mudarUsuario.setEmail(request.email());
-		mudarUsuario.setDataNascimento(request.dataNascimento());
 		mudarUsuario.setSenha(senha);
-		mudarUsuario.setCurso(request.curso());
 
 		Usuario usuario = usuarioRepository.save(mudarUsuario);
 		logger.info("Usuário com id " + usuario.getUsuarioId() + " foi mudado.");
