@@ -37,6 +37,20 @@ public class EmailService {
         return emailToken;
     }
 
+    public EmailToken atualizarToken(Usuario usuario) {
+        EmailToken atualizarToken = emailTokenRepository.findByUsuario(usuario);
+
+        Random random = new Random();
+        Integer token = random.nextInt(100000, 999999);
+
+        atualizarToken.setToken(token);
+
+        EmailToken emailToken = emailTokenRepository.save(atualizarToken);
+        logger.info("EmailToken com id " + emailToken.getTokenId() + " foi atualizado para o usuario com id " + usuario.getUsuarioId());
+
+        return emailToken;
+    }
+
     public void mandarEmail(Usuario usuario, EmailToken emailToken) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("absisters.dev@gmail.com");

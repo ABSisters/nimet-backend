@@ -95,6 +95,8 @@ public class UsuarioService {
 			if(usuarioRepository.existsByUsernameAndUsuarioIdNot(request.username(), id)){
 				throw new ObjetoJaExiste("Usuário", "username", request.username());
 			}
+
+            mudarUsuario.setUsername(request.username());
 		}
 
         if(!Objects.equals(mudarUsuario.getEmail(), request.email())){
@@ -105,12 +107,11 @@ public class UsuarioService {
             mudarUsuario.setEmailValido(false);
             mudarUsuario.setEmail(request.email());
 
-            EmailToken emailToken = emailService.criarToken(mudarUsuario);
+            EmailToken emailToken = emailService.atualizarToken(mudarUsuario);
             emailService.mandarEmail(mudarUsuario, emailToken);
         }
 
 		mudarUsuario.setNome(request.nome());
-		mudarUsuario.setUsername(request.username());
 		mudarUsuario.setDataNascimento(request.dataNascimento());
 		mudarUsuario.setCurso(request.curso());
 
