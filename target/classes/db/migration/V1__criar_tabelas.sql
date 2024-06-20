@@ -34,3 +34,14 @@ CREATE TABLE perguntas (
     CONSTRAINT pergunta_pk PRIMARY KEY (pergunta_id),
     CONSTRAINT usuario_fk FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id)
 );
+
+CREATE TABLE respostas (
+    resposta_id char(32) NOT NULL,
+    usuario_id char(32) NOT NULL,
+    pergunta_id char(32) NOT NULL,
+    resposta varchar2(200) NOT NULL,
+    data_criado date NOT NULL,
+    CONSTRAINT resposta_pk PRIMARY KEY (resposta_id),
+    CONSTRAINT usuario_fk FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id),
+    CONSTRAINT pergunta_fk FOREIGN KEY (pergunta_id) REFERENCES perguntas(pergunta_id)
+);
