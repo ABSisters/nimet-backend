@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j2;
 @Service
 @AllArgsConstructor
 @Log4j2
-public class UsuarioCleanupService {
+public class CleanupService {
 	@Autowired
     private UsuarioRepository usuarioRepository;
 
@@ -49,5 +49,17 @@ public class UsuarioCleanupService {
         }
 
         usuarioEmailNaoFoiValidado.clear();
+    }
+
+    @Scheduled(fixedRate = 300000)
+    public void emailTokenCleanup (){
+        List<EmailToken> emailTokenDataExpirado = emailTokenRepository.findAllByDataExpiradoIsBefore(LocalDateTime.now());
+
+        for (EmailToken emailToken : emailTokenDataExpirado){
+            emailTokenRepository.delete(emailToken);
+            logger.info("Token com id " + emailToken.getTokenId() + " foi deletado após ser expirado");
+        }
+
+        emailTokenDataExpirado.clear();
     }
 }

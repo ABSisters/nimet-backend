@@ -16,6 +16,7 @@ CREATE TABLE emailtoken (
     token_id varchar2(32) NOT NULL,
     usuario_id varchar2(32) NOT NULL,
     token number(6) NOT NULL,
+    data_expirado date NOT NULL,
     data_criado date NOT NULL,
     CONSTRAINT token_pk PRIMARY KEY (token_id),
     CONSTRAINT usuario_fk FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id)

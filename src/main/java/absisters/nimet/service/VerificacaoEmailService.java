@@ -38,9 +38,7 @@ public class VerificacaoEmailService {
             throw new ObjetoNaoExiste("EmailToken", "token", request.token().toString());
         }
 
-        LocalDateTime emailTokenExpirouAposUmDia = emailToken.getDataCriado().plusDays(1);
-
-        if (emailTokenExpirouAposUmDia.isBefore(LocalDateTime.now())) {
+        if (emailToken.getDataExpirado().isBefore(LocalDateTime.now())) {
             throw new EmailTokenExpirado(emailToken.getTokenId());
         }
 
@@ -56,8 +54,10 @@ public class VerificacaoEmailService {
 
         usuario.setEmailValido(true);
         usuarioRepository.save(usuario);
-
         logger.info("Email " + usuario.getEmail() + " foi validado");
+
+        emailTokenRepository.delete(emailToken);
+        logger.info("Token com id " + emailToken.getTokenId() + " foi utilizado e deletado");
 
         return ResponseEntity.ok().body(usuario.getEmailValido());
     }

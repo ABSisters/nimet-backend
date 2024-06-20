@@ -5,9 +5,12 @@ import absisters.nimet.domain.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Repository
 public interface EmailTokenRepository extends JpaRepository<EmailToken, String> {
-    boolean existsByUsuario(Usuario usuario);
     EmailToken findByToken(Integer token);
     EmailToken findByUsuario(Usuario usuario);
+    List<EmailToken> findAllByDataExpiradoIsBefore(LocalDateTime localDateTime);
 }

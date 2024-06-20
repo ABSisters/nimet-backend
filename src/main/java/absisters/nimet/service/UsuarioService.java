@@ -70,12 +70,24 @@ public class UsuarioService {
 
 		Usuario usuario = new Usuario();
 
+        String senhaCriptografada = Hashing.sha256()
+                .hashString(senha, StandardCharsets.UTF_8)
+                .toString();
+
 		if (usuarioRepository.existsByEmail(login)) {
-			usuario = usuarioRepository.loginByEmail(login, senha);
-			logger.info("Usuário logado com email");
+			usuario = usuarioRepository.loginByEmail(login, senhaCriptografada);
+			if(usuario != null){
+				logger.info("Usuário logado com email");
+			} else {
+				throw new Exception("Usuário não encontrado");
+			}
 		} else if (usuarioRepository.existsByUsername(login)) {
-			usuario = usuarioRepository.loginByUsername(login, senha);
-			logger.info("Usuário logado com username");
+			usuario = usuarioRepository.loginByUsername(login, senhaCriptografada);
+			if(usuario != null){
+				logger.info("Usuário logado com username");
+			} else {
+				throw new Exception("Usuário não encontrado");
+			}
 		} else {
 			throw new Exception("Usuário não encontrado");
 		}
@@ -107,7 +119,7 @@ public class UsuarioService {
             mudarUsuario.setEmailValido(false);
             mudarUsuario.setEmail(request.email());
 
-            EmailToken emailToken = emailService.atualizarToken(mudarUsuario);
+            EmailToken emailToken = emailService.criarToken(mudarUsuario);
             emailService.mandarEmail(mudarUsuario, emailToken);
         }
 
