@@ -96,15 +96,15 @@ public class UsuarioService {
 	}
 
 
-	public UsuarioResponse update(String id, UsuarioPutRequest request) {
-		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(id);
+	public UsuarioResponse update(String usuarioId, UsuarioPutRequest request) {
+		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(usuarioId);
 
 		if(mudarUsuario == null){
-			throw new ObjetoNaoExiste("Usuário", "id", id);
+			throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
 		}
 
 		if(!Objects.equals(mudarUsuario.getUsername(), request.username())){
-			if(usuarioRepository.existsByUsernameAndUsuarioIdNot(request.username(), id)){
+			if(usuarioRepository.existsByUsernameAndUsuarioIdNot(request.username(), usuarioId)){
 				throw new ObjetoJaExiste("Usuário", "username", request.username());
 			}
 
@@ -112,7 +112,7 @@ public class UsuarioService {
 		}
 
         if(!Objects.equals(mudarUsuario.getEmail(), request.email())){
-			if(usuarioRepository.existsByEmailAndUsuarioIdNot(request.email(), id)){
+			if(usuarioRepository.existsByEmailAndUsuarioIdNot(request.email(), usuarioId)){
 				throw new ObjetoJaExiste("Usuário", "email", request.email());
 			}
 
@@ -134,11 +134,11 @@ public class UsuarioService {
 	}
 
 
-	public UsuarioResponse updateSenha(String id, UsuarioPutSenhaRequest request) {
-		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(id);
+	public UsuarioResponse updateSenha(String usuarioId, UsuarioPutSenhaRequest request) {
+		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(usuarioId);
 
 		if(mudarUsuario == null){
-			throw new ObjetoNaoExiste("Usuário", "id", id);
+			throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
 		}
 
 		String senha = Hashing.sha256()
@@ -154,11 +154,11 @@ public class UsuarioService {
 	}
 
 
-	public void delete(String id) {
-		Usuario usuario = usuarioRepository.findByUsuarioId(id);
+	public void delete(String usuarioId) {
+		Usuario usuario = usuarioRepository.findByUsuarioId(usuarioId);
 
 		if(usuario == null){
-			throw new ObjetoNaoExiste("Usuário", "id", id);
+			throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
 		}
 
 		EmailToken emailToken= emailTokenRepository.findByUsuario(usuario);

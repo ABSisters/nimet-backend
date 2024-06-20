@@ -1,23 +1,58 @@
 package absisters.nimet.dto;
 
 import absisters.nimet.domain.Curso;
+import absisters.nimet.domain.Pergunta;
+import absisters.nimet.domain.Tags;
 import absisters.nimet.domain.TipoUsuario;
 import absisters.nimet.domain.Usuario;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-20T01:19:36-0300",
+    date = "2024-06-20T00:32:13-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 @Component
-public class UsuarioMapperImpl implements UsuarioMapper {
+public class PerguntaMapperImpl implements PerguntaMapper {
 
     @Override
-    public UsuarioResponse to(Usuario usuario) {
+    public PerguntaResponse to(Pergunta pergunta) {
+        if ( pergunta == null ) {
+            return null;
+        }
+
+        String perguntaId = null;
+        Curso curso = null;
+        UsuarioResponse usuario = null;
+        String titulo = null;
+        String detalhes = null;
+        List<Tags> tags = null;
+        Boolean status = null;
+        LocalDateTime dataCriado = null;
+
+        perguntaId = pergunta.getPerguntaId();
+        curso = pergunta.getCurso();
+        usuario = usuarioToUsuarioResponse( pergunta.getUsuario() );
+        titulo = pergunta.getTitulo();
+        detalhes = pergunta.getDetalhes();
+        List<Tags> list = pergunta.getTags();
+        if ( list != null ) {
+            tags = new ArrayList<Tags>( list );
+        }
+        status = pergunta.getStatus();
+        dataCriado = pergunta.getDataCriado();
+
+        PerguntaResponse perguntaResponse = new PerguntaResponse( perguntaId, curso, usuario, titulo, detalhes, tags, status, dataCriado );
+
+        return perguntaResponse;
+    }
+
+    protected UsuarioResponse usuarioToUsuarioResponse(Usuario usuario) {
         if ( usuario == null ) {
             return null;
         }

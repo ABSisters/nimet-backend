@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import absisters.nimet.dto.UsuarioPostRequest;
 import absisters.nimet.dto.UsuarioResponse;
 import absisters.nimet.service.UsuarioService;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 
@@ -20,7 +19,7 @@ public class UsuarioController {
 	private UsuarioService usuarioService;
 
 	@PostMapping("/cadastrar")
-	public UsuarioResponse post(@RequestBody @Valid @NotNull UsuarioPostRequest usuario) {
+	public UsuarioResponse post(@RequestBody @NotNull UsuarioPostRequest usuario) {
 		return usuarioService.create(usuario);
 	}
 
@@ -35,18 +34,18 @@ public class UsuarioController {
 		return usuarioService.login(login, senha);
 	}
 
-	@PutMapping("/mudar/{id}")
-	public UsuarioResponse put(@PathVariable String id, @RequestBody @Valid @NotNull UsuarioPutRequest usuario) {
-		return usuarioService.update(id, usuario);
+	@PutMapping("/mudar/{usuarioId}")
+	public UsuarioResponse put(@PathVariable String usuarioId, @RequestBody @NotNull UsuarioPutRequest usuario) {
+		return usuarioService.update(usuarioId, usuario);
 	}
 
-	@PutMapping("/mudar/senha/{id}")
-	public UsuarioResponse putSenha(@PathVariable String id, @RequestBody @Valid @NotNull UsuarioPutSenhaRequest usuario) {
-		return usuarioService.updateSenha(id, usuario);
+	@PutMapping("/mudar/senha/{usuarioId}")
+	public UsuarioResponse putSenha(@PathVariable String usuarioId, @RequestBody @NotNull UsuarioPutSenhaRequest usuario) {
+		return usuarioService.updateSenha(usuarioId, usuario);
 	}
 
-	@DeleteMapping("/deletar/{id}")
-	public void delete(@PathVariable String id) {
-		usuarioService.delete(id);
+	@DeleteMapping("/deletar/{usuarioId}")
+	public void delete(@PathVariable String usuarioId) {
+		usuarioService.delete(usuarioId);
 	}
 }
