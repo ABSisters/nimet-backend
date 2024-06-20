@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class PerguntaController {
@@ -18,6 +20,11 @@ public class PerguntaController {
     @PostMapping("api/usuarios/{usuarioId}/perguntas/adicionar")
     public PerguntaResponse post(@PathVariable String usuarioId, @RequestBody @NotNull PerguntaPostRequest pergunta) {
         return perguntaService.create(usuarioId, pergunta);
+    }
+
+    @GetMapping("api/usuarios/{usuarioId}/perguntas/curso")
+    public List<PerguntaResponse> getPerguntasDoCurso(@PathVariable String usuarioId) {
+        return perguntaService.getPerguntasDoCurso(usuarioId);
     }
 
 }

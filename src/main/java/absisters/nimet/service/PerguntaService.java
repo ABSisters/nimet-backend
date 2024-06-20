@@ -12,6 +12,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class PerguntaService {
@@ -38,5 +40,19 @@ public class PerguntaService {
         logger.info("Usuário com id " + usuario.getUsuarioId() + " criou a adicionou a pergunta com id " + pergunta.getPerguntaId());
 
         return perguntaMapper.to(pergunta);
+    }
+
+    public List<PerguntaResponse> getPerguntasDoCurso(String usuarioId) {
+        Usuario usuario = usuarioRepository.findByUsuarioId(usuarioId);
+
+        if(usuario == null){
+            throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+        }
+
+        List<Pergunta> perguntas = perguntaRepository.findByCurso(usuario.getCurso());
+
+        logger.info("Usuário com id " + usuario.getUsuarioId() + " solicitou as perguntas do curso " + usuario.getCurso());
+
+        return perguntaMapper.to(perguntas);
     }
 }

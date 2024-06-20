@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-20T00:32:13-0300",
+    date = "2024-06-20T14:23:51-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 @Component
@@ -50,6 +50,20 @@ public class PerguntaMapperImpl implements PerguntaMapper {
         PerguntaResponse perguntaResponse = new PerguntaResponse( perguntaId, curso, usuario, titulo, detalhes, tags, status, dataCriado );
 
         return perguntaResponse;
+    }
+
+    @Override
+    public List<PerguntaResponse> to(List<Pergunta> perguntas) {
+        if ( perguntas == null ) {
+            return null;
+        }
+
+        List<PerguntaResponse> list = new ArrayList<PerguntaResponse>( perguntas.size() );
+        for ( Pergunta pergunta : perguntas ) {
+            list.add( to( pergunta ) );
+        }
+
+        return list;
     }
 
     protected UsuarioResponse usuarioToUsuarioResponse(Usuario usuario) {
