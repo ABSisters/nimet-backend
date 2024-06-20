@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-20T13:56:24-0300",
+    date = "2024-06-20T14:43:39-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 @Component
@@ -42,6 +42,20 @@ public class RespostaMapperImpl implements RespostaMapper {
         RespostaResponse respostaResponse = new RespostaResponse( respostaId, usuario, pergunta, resposta1, dataCriado );
 
         return respostaResponse;
+    }
+
+    @Override
+    public List<RespostaResponse> to(List<Resposta> respostas) {
+        if ( respostas == null ) {
+            return null;
+        }
+
+        List<RespostaResponse> list = new ArrayList<RespostaResponse>( respostas.size() );
+        for ( Resposta resposta : respostas ) {
+            list.add( to( resposta ) );
+        }
+
+        return list;
     }
 
     protected UsuarioResponse usuarioToUsuarioResponse(Usuario usuario) {
