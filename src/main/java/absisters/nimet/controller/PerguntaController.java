@@ -4,6 +4,7 @@ import absisters.nimet.domain.Curso;
 import absisters.nimet.dto.Request.PerguntaPostRequest;
 import absisters.nimet.dto.Response.PerguntaResponse;
 import absisters.nimet.service.PerguntaService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class PerguntaController {
     private PerguntaService perguntaService;
 
     @PostMapping("api/usuarios/{usuarioId}/perguntas/adicionar")
-    public PerguntaResponse post(@PathVariable String usuarioId, @RequestBody @NotNull PerguntaPostRequest pergunta) {
+    public PerguntaResponse post(@PathVariable String usuarioId, @RequestBody @Valid @NotNull PerguntaPostRequest pergunta) {
         return perguntaService.create(usuarioId, pergunta);
     }
 

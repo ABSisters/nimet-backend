@@ -26,7 +26,7 @@ CREATE TABLE perguntas (
     pergunta_id char(32) NOT NULL,
     curso varchar2(20) NOT NULL,
     usuario_id char(32) NOT NULL,
-    titulo varchar2(20) NOT NULL,
+    titulo varchar2(200) NOT NULL,
     detalhes varchar2(200) NOT NULL,
     tags varchar2(200) NOT NULL,
     status number(1) NOT NULL,
