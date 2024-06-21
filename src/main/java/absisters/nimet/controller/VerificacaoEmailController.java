@@ -1,6 +1,6 @@
 package absisters.nimet.controller;
 
-import absisters.nimet.dto.VerificacaoEmailRequest;
+import absisters.nimet.dto.Request.VerificacaoEmailRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;

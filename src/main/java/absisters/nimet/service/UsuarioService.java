@@ -9,11 +9,17 @@ import java.util.Objects;
 import absisters.nimet.domain.EmailToken;
 import absisters.nimet.domain.Pergunta;
 import absisters.nimet.domain.Resposta;
-import absisters.nimet.dto.*;
+import absisters.nimet.dto.Mapper.UsuarioMapper;
+import absisters.nimet.dto.Request.UsuarioPostRequest;
+import absisters.nimet.dto.Request.UsuarioPutRequest;
+import absisters.nimet.dto.Request.UsuarioPutSenhaRequest;
+import absisters.nimet.dto.Response.UsuarioResponse;
 import absisters.nimet.exception.ObjetoNaoExiste;
 import absisters.nimet.repository.EmailTokenRepository;
 import absisters.nimet.repository.PerguntaRepository;
 import absisters.nimet.repository.RespostaRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +34,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -46,6 +53,8 @@ public class UsuarioService {
 
 	@Autowired
 	private RespostaRepository respostaRepository;
+
+	private EntityManager entityManager;
 
 	//	@Autowired
 	//    private UsuarioResponse userResponse;
@@ -178,19 +187,19 @@ public class UsuarioService {
 			logger.info("Token com id " + emailToken.getTokenId() + " foi deletado em conjunto com o usuario com id " + usuario.getUsuarioId());
 		}
 
-		List<Pergunta> perguntas = perguntaRepository.findAllByUsuario(usuario);
-		if (!perguntas.isEmpty()) {
-			for (Pergunta pergunta : perguntas){
-				perguntaRepository.delete(pergunta);
-				logger.info("Pergunta com id " + pergunta.getPerguntaId() + " foi deletado em conjunto com o usuario com id " + usuario.getUsuarioId());
-			}
-		}
-
 		List<Resposta> respostas = respostaRepository.findAllByUsuario(usuario);
 		if (!respostas.isEmpty()) {
 			for (Resposta resposta : respostas){
 				respostaRepository.delete(resposta);
 				logger.info("Resposta com id " + resposta.getRespostaId() + " foi deletado em conjunto com o usuario com id " + usuario.getUsuarioId());
+			}
+		}
+
+		List<Pergunta> perguntas = perguntaRepository.findAllByUsuario(usuario);
+		if (!perguntas.isEmpty()) {
+			for (Pergunta pergunta : perguntas){
+				perguntaRepository.delete(pergunta);
+				logger.info("Pergunta com id " + pergunta.getPerguntaId() + " foi deletado em conjunto com o usuario com id " + usuario.getUsuarioId());
 			}
 		}
 

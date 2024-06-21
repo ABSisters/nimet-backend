@@ -1,11 +1,11 @@
 package absisters.nimet.controller;
 
-import absisters.nimet.dto.UsuarioPutRequest;
-import absisters.nimet.dto.UsuarioPutSenhaRequest;
+import absisters.nimet.dto.Request.UsuarioPutRequest;
+import absisters.nimet.dto.Request.UsuarioPutSenhaRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import absisters.nimet.dto.UsuarioPostRequest;
-import absisters.nimet.dto.UsuarioResponse;
+import absisters.nimet.dto.Request.UsuarioPostRequest;
+import absisters.nimet.dto.Response.UsuarioResponse;
 import absisters.nimet.service.UsuarioService;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

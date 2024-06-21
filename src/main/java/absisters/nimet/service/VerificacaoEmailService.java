@@ -3,7 +3,7 @@ package absisters.nimet.service;
 import java.time.LocalDateTime;
 
 import absisters.nimet.domain.EmailToken;
-import absisters.nimet.dto.VerificacaoEmailRequest;
+import absisters.nimet.dto.Request.VerificacaoEmailRequest;
 import absisters.nimet.repository.EmailTokenRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

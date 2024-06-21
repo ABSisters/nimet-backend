@@ -1,8 +1,7 @@
 package absisters.nimet.controller;
 
-import absisters.nimet.dto.PerguntaResponse;
-import absisters.nimet.dto.RespostaPostRequest;
-import absisters.nimet.dto.RespostaResponse;
+import absisters.nimet.dto.Request.RespostaPostRequest;
+import absisters.nimet.dto.Response.RespostaResponse;
 import absisters.nimet.service.RespostaService;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
