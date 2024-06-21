@@ -28,7 +28,7 @@ CREATE TABLE perguntas (
     usuario_id char(32) NOT NULL,
     titulo varchar2(20) NOT NULL,
     detalhes varchar2(200) NOT NULL,
-    tags varchar2(30) NOT NULL,
+    tags varchar2(200) NOT NULL,
     status number(1) NOT NULL,
     data_criado date NOT NULL,
     CONSTRAINT pergunta_pk PRIMARY KEY (pergunta_id),

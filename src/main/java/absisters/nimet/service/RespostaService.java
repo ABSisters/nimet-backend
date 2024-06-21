@@ -64,7 +64,7 @@ public class RespostaService {
             throw new ObjetoNaoExiste("Pergunta", "id", perguntaId);
         }
 
-        List<Resposta> respostas = respostaRepository.findByPergunta(pergunta);
+        List<Resposta> respostas = respostaRepository.findAllByPergunta(pergunta);
 
         logger.info("Usuário solicitou as respostas da pergunta " + pergunta.getPerguntaId());
 

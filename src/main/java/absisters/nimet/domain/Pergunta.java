@@ -22,7 +22,14 @@ public class Pergunta {
 
     private String titulo;
     private String detalhes;
+
+    @ElementCollection(targetClass = Tags.class)
+    @Column(name = "tags")
+    @CollectionTable(name="pergunta_tags")
+    @JoinTable(name = "pergunta_tags", joinColumns = @JoinColumn(name = "perguntaId"))
+    @Enumerated(EnumType.STRING)
     private List<Tags> tags;
+
     private Boolean status;
     private LocalDateTime dataCriado;
 

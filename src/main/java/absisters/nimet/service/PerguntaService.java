@@ -1,5 +1,6 @@
 package absisters.nimet.service;
 
+import absisters.nimet.domain.Curso;
 import absisters.nimet.domain.Pergunta;
 import absisters.nimet.domain.Usuario;
 import absisters.nimet.dto.*;
@@ -42,16 +43,9 @@ public class PerguntaService {
         return perguntaMapper.to(pergunta);
     }
 
-    public List<PerguntaResponse> getPerguntasDoCurso(String usuarioId) {
-        Usuario usuario = usuarioRepository.findByUsuarioId(usuarioId);
-
-        if(usuario == null){
-            throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
-        }
-
-        List<Pergunta> perguntas = perguntaRepository.findByCurso(usuario.getCurso());
-
-        logger.info("Usuário com id " + usuario.getUsuarioId() + " solicitou as perguntas do curso " + usuario.getCurso());
+    public List<PerguntaResponse> getPerguntasDoCurso(Curso curso) {
+        List<Pergunta> perguntas = perguntaRepository.findAllByCurso(curso);
+        logger.info("Usuário solicitou as perguntas do curso " + curso);
 
         return perguntaMapper.to(perguntas);
     }

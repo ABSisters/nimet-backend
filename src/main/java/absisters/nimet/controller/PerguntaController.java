@@ -1,5 +1,6 @@
 package absisters.nimet.controller;
 
+import absisters.nimet.domain.Curso;
 import absisters.nimet.dto.PerguntaPostRequest;
 import absisters.nimet.dto.PerguntaResponse;
 import absisters.nimet.service.PerguntaService;
@@ -22,9 +23,9 @@ public class PerguntaController {
         return perguntaService.create(usuarioId, pergunta);
     }
 
-    @GetMapping("api/usuarios/{usuarioId}/perguntas/curso")
-    public List<PerguntaResponse> getPerguntasDoCurso(@PathVariable String usuarioId) {
-        return perguntaService.getPerguntasDoCurso(usuarioId);
+    @GetMapping("api/perguntas/curso/{curso}")
+    public List<PerguntaResponse> getPerguntasDoCurso(@PathVariable Curso curso) {
+        return perguntaService.getPerguntasDoCurso(curso);
     }
 
 }
