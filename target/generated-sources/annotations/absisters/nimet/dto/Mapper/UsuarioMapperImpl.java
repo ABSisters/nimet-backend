@@ -1,8 +1,9 @@
-package absisters.nimet.dto;
+package absisters.nimet.dto.Mapper;
 
 import absisters.nimet.domain.Curso;
 import absisters.nimet.domain.TipoUsuario;
 import absisters.nimet.domain.Usuario;
+import absisters.nimet.dto.Response.UsuarioResponse;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.annotation.processing.Generated;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-05-09T21:42:51-0300",
+    date = "2024-06-21T13:08:11-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 @Component

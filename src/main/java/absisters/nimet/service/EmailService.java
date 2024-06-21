@@ -2,7 +2,6 @@ package absisters.nimet.service;
 
 import absisters.nimet.domain.EmailToken;
 import absisters.nimet.domain.Usuario;
-import absisters.nimet.exception.ObjetoJaExiste;
 import absisters.nimet.repository.EmailTokenRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +10,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Random;
 
 @Service
@@ -24,32 +24,25 @@ public class EmailService {
     private static Logger logger = LogManager.getLogger();
 
     public EmailToken criarToken(Usuario usuario) {
-        if(emailTokenRepository.existsByUsuario(usuario)){
-            throw new ObjetoJaExiste("EmailToken", "usuario", usuario.getUsuarioId());
+        Random random = new Random();
+        Integer token = random.nextInt(100000, 999999);
+
+        EmailToken atualizarToken = emailTokenRepository.findByUsuario(usuario);
+        EmailToken emailToken = new EmailToken();
+
+        if(atualizarToken != null){
+            atualizarToken.setToken(token);
+            atualizarToken.setDataExpirado(LocalDateTime.now().plusDays(1));
+            emailToken = emailTokenRepository.save(atualizarToken);
+            logger.info("EmailToken com id " + emailToken.getTokenId() + " foi atualizado para um novo token");
+        } else {
+            emailToken = emailTokenRepository.save(new EmailToken(usuario, token));
+            logger.info("EmailToken com id " + emailToken.getTokenId() + " foi criado para o usuario com id " + usuario.getUsuarioId());
         }
 
-        Random random = new Random();
-        Integer token = random.nextInt(100000, 999999);
-
-        EmailToken emailToken = emailTokenRepository.save(new EmailToken(usuario, token));
-        logger.info("EmailToken com id " + emailToken.getTokenId() + " foi criado para o usuario com id " + usuario.getUsuarioId());
-
         return emailToken;
     }
 
-    public EmailToken atualizarToken(Usuario usuario) {
-        EmailToken atualizarToken = emailTokenRepository.findByUsuario(usuario);
-
-        Random random = new Random();
-        Integer token = random.nextInt(100000, 999999);
-
-        atualizarToken.setToken(token);
-
-        EmailToken emailToken = emailTokenRepository.save(atualizarToken);
-        logger.info("EmailToken com id " + emailToken.getTokenId() + " foi atualizado para o usuario com id " + usuario.getUsuarioId());
-
-        return emailToken;
-    }
 
     public void mandarEmail(Usuario usuario, EmailToken emailToken) {
         SimpleMailMessage message = new SimpleMailMessage();

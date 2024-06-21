@@ -1,4 +1,4 @@
-package absisters.nimet.dto;
+package absisters.nimet.dto.Response;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

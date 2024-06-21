@@ -97,4 +97,18 @@ public class GlobalExceptionHandler {
         //log.warn(status + " " + detail);
         return new ResponseEntity<>(problem, status);
     }
+
+    @ExceptionHandler(PerguntaFechada.class)
+    public ResponseEntity<ProblemDetail> perguntaFechada(PerguntaFechada ex) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        String title = "Question is closed. Exception: " + ex.getClass();
+        //String detail = "Pergunta com id %s foi fechada, não é possível manipular".formatted(ex.getIdentificador());
+
+        ProblemDetail problem = ProblemDetail.forStatus(status);
+        problem.setTitle(title);
+        //problem.setDetail(detail);
+
+        //log.warn(status + " " + detail);
+        return new ResponseEntity<>(problem, status);
+    }
 }

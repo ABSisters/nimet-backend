@@ -1,4 +1,4 @@
-package absisters.nimet.dto;
+package absisters.nimet.dto.Request;
 
 import absisters.nimet.domain.Curso;
 import jakarta.validation.constraints.NotNull;
