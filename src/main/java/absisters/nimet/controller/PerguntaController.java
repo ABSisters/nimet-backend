@@ -13,18 +13,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/perguntas")
 @AllArgsConstructor
 public class PerguntaController {
 
     @Autowired
     private PerguntaService perguntaService;
 
-    @PostMapping("api/usuarios/{usuarioId}/perguntas/adicionar")
-    public PerguntaResponse post(@PathVariable String usuarioId, @RequestBody @Valid @NotNull PerguntaPostRequest pergunta) {
-        return perguntaService.create(usuarioId, pergunta);
+    @PostMapping("/adicionar")
+    public PerguntaResponse post(@RequestBody @Valid @NotNull PerguntaPostRequest pergunta) {
+        return perguntaService.create(pergunta);
     }
 
-    @GetMapping("api/perguntas/curso/{curso}")
+    @GetMapping("/curso/{curso}")
     public List<PerguntaResponse> getPerguntasDoCurso(@PathVariable Curso curso) {
         return perguntaService.getPerguntasDoCurso(curso);
     }

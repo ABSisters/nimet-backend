@@ -116,15 +116,15 @@ public class UsuarioService {
 	}
 
 
-	public UsuarioResponse update(String usuarioId, UsuarioPutRequest request) {
-		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(usuarioId);
+	public UsuarioResponse update(UsuarioPutRequest request) {
+		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(request.usuarioId());
 
 		if(mudarUsuario == null){
-			throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+			throw new ObjetoNaoExiste("Usuário", "id", request.usuarioId());
 		}
 
 		if(!Objects.equals(mudarUsuario.getUsername(), request.username())){
-			if(usuarioRepository.existsByUsernameAndUsuarioIdNot(request.username(), usuarioId)){
+			if(usuarioRepository.existsByUsernameAndUsuarioIdNot(request.username(), request.usuarioId())){
 				throw new ObjetoJaExiste("Usuário", "username", request.username());
 			}
 
@@ -132,7 +132,7 @@ public class UsuarioService {
 		}
 
         if(!Objects.equals(mudarUsuario.getEmail(), request.email())){
-			if(usuarioRepository.existsByEmailAndUsuarioIdNot(request.email(), usuarioId)){
+			if(usuarioRepository.existsByEmailAndUsuarioIdNot(request.email(), request.usuarioId())){
 				throw new ObjetoJaExiste("Usuário", "email", request.email());
 			}
 
@@ -154,11 +154,11 @@ public class UsuarioService {
 	}
 
 
-	public UsuarioResponse updateSenha(String usuarioId, UsuarioPutSenhaRequest request) {
-		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(usuarioId);
+	public UsuarioResponse updateSenha(UsuarioPutSenhaRequest request) {
+		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(request.usuarioId());
 
 		if(mudarUsuario == null){
-			throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+			throw new ObjetoNaoExiste("Usuário", "id", request.usuarioId());
 		}
 
 		String senha = Hashing.sha256()

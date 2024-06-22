@@ -31,11 +31,11 @@ public class PerguntaService {
 
     private static Logger logger = LogManager.getLogger();
 
-    public PerguntaResponse create(String usuarioId, PerguntaPostRequest request) {
-        Usuario usuario = usuarioRepository.findByUsuarioId(usuarioId);
+    public PerguntaResponse create(PerguntaPostRequest request) {
+        Usuario usuario = usuarioRepository.findByUsuarioId(request.usuarioId());
 
         if(usuario == null){
-            throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+            throw new ObjetoNaoExiste("Usuário", "id", request.usuarioId());
         }
 
         Pergunta pergunta = perguntaRepository.save(

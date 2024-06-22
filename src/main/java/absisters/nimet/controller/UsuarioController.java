@@ -35,14 +35,14 @@ public class UsuarioController {
 		return usuarioService.login(login, senha);
 	}
 
-	@PutMapping("/mudar/{usuarioId}")
-	public UsuarioResponse put(@PathVariable String usuarioId, @RequestBody @Valid @NotNull UsuarioPutRequest usuario) {
-		return usuarioService.update(usuarioId, usuario);
+	@PutMapping("/mudar")
+	public UsuarioResponse put(@RequestBody @Valid @NotNull UsuarioPutRequest usuario) {
+		return usuarioService.update(usuario);
 	}
 
-	@PutMapping("/mudar/senha/{usuarioId}")
-	public UsuarioResponse putSenha(@PathVariable String usuarioId, @RequestBody @Valid @NotNull UsuarioPutSenhaRequest usuario) {
-		return usuarioService.updateSenha(usuarioId, usuario);
+	@PutMapping("/mudar/senha")
+	public UsuarioResponse putSenha(@RequestBody @Valid @NotNull UsuarioPutSenhaRequest usuario) {
+		return usuarioService.updateSenha(usuario);
 	}
 
 	@DeleteMapping("/deletar/{usuarioId}")

@@ -36,18 +36,18 @@ public class RespostaService {
 
     private static Logger logger = LogManager.getLogger();
 
-    public RespostaResponse create(String usuarioId, String perguntaId, RespostaPostRequest request) {
-        Usuario usuario = usuarioRepository.findByUsuarioId(usuarioId);
+    public RespostaResponse create(RespostaPostRequest request) {
+        Usuario usuario = usuarioRepository.findByUsuarioId(request.usuarioId());
         if(usuario == null){
-            throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+            throw new ObjetoNaoExiste("Usuário", "id", request.usuarioId());
         }
 
-        Pergunta pergunta = perguntaRepository.findByPerguntaId(perguntaId);
+        Pergunta pergunta = perguntaRepository.findByPerguntaId(request.perguntaId());
         if(pergunta == null){
-            throw new ObjetoNaoExiste("Pergunta", "id", perguntaId);
+            throw new ObjetoNaoExiste("Pergunta", "id", request.perguntaId());
         }
         if(pergunta.getStatus() == false){
-            throw new PerguntaFechada(perguntaId);
+            throw new PerguntaFechada(request.perguntaId());
         }
 
         Resposta resposta = respostaRepository.save(
