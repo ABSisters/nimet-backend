@@ -5,6 +5,7 @@ import absisters.nimet.domain.Resposta;
 import absisters.nimet.domain.Usuario;
 import absisters.nimet.dto.Mapper.RespostaMapper;
 import absisters.nimet.dto.Request.RespostaPostRequest;
+import absisters.nimet.dto.Response.PerguntaResponse;
 import absisters.nimet.dto.Response.RespostaResponse;
 import absisters.nimet.exception.ObjetoNaoExiste;
 import absisters.nimet.exception.PerguntaFechada;
@@ -55,6 +56,19 @@ public class RespostaService {
         logger.info("Usuário com id " + usuario.getUsuarioId() + " adicionou a resposta com id " + resposta.getRespostaId() + " para a pergunta com id " + pergunta.getPerguntaId());
 
         return respostaMapper.to(resposta);
+    }
+
+    public List<RespostaResponse> getRespostasDoUsuario(String usuarioId) {
+        Usuario usuario = usuarioRepository.findByUsuarioId(usuarioId);
+
+        if(usuario == null){
+            throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+        }
+
+        List<Resposta> respostas = respostaRepository.findAllByUsuario(usuario);
+        logger.info("Usuário com id " + usuario.getUsuarioId() + " solicitou as suas respostas");
+
+        return respostaMapper.to(respostas);
     }
 
     public List<RespostaResponse> getRespostasDeUmaPergunta(String perguntaId) {

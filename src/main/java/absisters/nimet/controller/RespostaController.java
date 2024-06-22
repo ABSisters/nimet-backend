@@ -24,6 +24,11 @@ public class RespostaController {
         return respostaService.create(resposta);
     }
 
+    @GetMapping("/usuario/{usuarioId}")
+    public List<RespostaResponse> getRespostasDoUsuario(@PathVariable String usuarioId) {
+        return respostaService.getRespostasDoUsuario(usuarioId);
+    }
+
     @GetMapping("/perguntas/{perguntaId}")
     public List<RespostaResponse> getRespostasDeUmaPergunta(@PathVariable String perguntaId) {
         return respostaService.getRespostasDeUmaPergunta(perguntaId);
