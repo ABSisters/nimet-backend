@@ -30,4 +30,9 @@ public class PerguntaController {
         return perguntaService.getPerguntasDoCurso(curso);
     }
 
+    @GetMapping("/{perguntaId}")
+    public PerguntaResponse getPergunta(@PathVariable String perguntaId) {
+        return perguntaService.getPergunta(perguntaId);
+    }
+
 }

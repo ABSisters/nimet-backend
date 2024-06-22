@@ -51,4 +51,16 @@ public class PerguntaService {
 
         return perguntaMapper.to(perguntas);
     }
+
+    public PerguntaResponse getPergunta(String perguntaId) {
+        Pergunta pergunta = perguntaRepository.findByPerguntaId(perguntaId);
+
+        if(pergunta == null){
+            throw new ObjetoNaoExiste("Pergunta", "id", perguntaId);
+        }
+
+        logger.info("Usuário solicitou uma pergunta com id " + perguntaId);
+
+        return perguntaMapper.to(pergunta);
+    }
 }
