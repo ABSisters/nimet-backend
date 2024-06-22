@@ -41,7 +41,7 @@ public class UsuarioController {
 	}
 
 	@PutMapping("/mudar/senha")
-	public UsuarioResponse putSenha(@RequestBody @Valid @NotNull UsuarioPutSenhaRequest usuario) {
+	public UsuarioResponse putSenha(@RequestBody @Valid @NotNull UsuarioPutSenhaRequest usuario) throws Exception {
 		return usuarioService.updateSenha(usuario);
 	}
 

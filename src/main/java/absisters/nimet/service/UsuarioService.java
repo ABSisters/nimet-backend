@@ -154,18 +154,26 @@ public class UsuarioService {
 	}
 
 
-	public UsuarioResponse updateSenha(UsuarioPutSenhaRequest request) {
+	public UsuarioResponse updateSenha(UsuarioPutSenhaRequest request) throws Exception {
 		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(request.usuarioId());
 
 		if(mudarUsuario == null){
 			throw new ObjetoNaoExiste("Usuário", "id", request.usuarioId());
 		}
 
-		String senha = Hashing.sha256()
-				.hashString(request.senha(), StandardCharsets.UTF_8)
+		String senhaAtual = Hashing.sha256()
+				.hashString(request.senhaAtual(), StandardCharsets.UTF_8)
 				.toString();
 
-		mudarUsuario.setSenha(senha);
+		if(!senhaAtual.equals(mudarUsuario.getSenha())){
+			throw new Exception("Senha errada");
+		}
+
+		String senhaNova = Hashing.sha256()
+				.hashString(request.senhaNova(), StandardCharsets.UTF_8)
+				.toString();
+
+		mudarUsuario.setSenha(senhaNova);
 
 		Usuario usuario = usuarioRepository.save(mudarUsuario);
 		logger.info("Usuário com id " + usuario.getUsuarioId() + " foi mudado.");
