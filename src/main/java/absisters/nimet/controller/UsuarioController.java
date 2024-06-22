@@ -1,7 +1,6 @@
 package absisters.nimet.controller;
 
 import absisters.nimet.dto.Request.UsuarioPostRequest;
-import absisters.nimet.dto.Request.UsuarioPutRequest;
 import absisters.nimet.dto.Request.UsuarioPutSenhaRequest;
 import absisters.nimet.dto.Response.UsuarioResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class UsuarioController {
 	}
 
 	@PutMapping("/mudar")
-	public UsuarioResponse put(@RequestBody @Valid @NotNull UsuarioPutRequest usuario) {
+	public UsuarioResponse put(@RequestBody @Valid @NotNull UsuarioResponse usuario) {
 		return usuarioService.update(usuario);
 	}
 

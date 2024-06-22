@@ -11,7 +11,6 @@ import absisters.nimet.domain.Pergunta;
 import absisters.nimet.domain.Resposta;
 import absisters.nimet.dto.Mapper.UsuarioMapper;
 import absisters.nimet.dto.Request.UsuarioPostRequest;
-import absisters.nimet.dto.Request.UsuarioPutRequest;
 import absisters.nimet.dto.Request.UsuarioPutSenhaRequest;
 import absisters.nimet.dto.Response.UsuarioResponse;
 import absisters.nimet.exception.ObjetoNaoExiste;
@@ -116,7 +115,7 @@ public class UsuarioService {
 	}
 
 
-	public UsuarioResponse update(UsuarioPutRequest request) {
+	public UsuarioResponse update(UsuarioResponse request) {
 		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(request.usuarioId());
 
 		if(mudarUsuario == null){
