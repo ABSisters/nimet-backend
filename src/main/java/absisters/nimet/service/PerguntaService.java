@@ -45,6 +45,19 @@ public class PerguntaService {
         return perguntaMapper.to(pergunta);
     }
 
+    public List<PerguntaResponse> getPerguntasDoUsuario(String usuarioId) {
+        Usuario usuario = usuarioRepository.findByUsuarioId(usuarioId);
+
+        if(usuario == null){
+            throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+        }
+
+        List<Pergunta> perguntas = perguntaRepository.findAllByUsuario(usuario);
+        logger.info("Usuário com id " + usuario.getUsuarioId() + " solicitou as suas perguntas");
+
+        return perguntaMapper.to(perguntas);
+    }
+
     public List<PerguntaResponse> getPerguntasDoCurso(Curso curso) {
         List<Pergunta> perguntas = perguntaRepository.findAllByCurso(curso);
         logger.info("Usuário solicitou as perguntas do curso " + curso);

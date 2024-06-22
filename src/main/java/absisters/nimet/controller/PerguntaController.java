@@ -25,6 +25,11 @@ public class PerguntaController {
         return perguntaService.create(pergunta);
     }
 
+    @GetMapping("/usuario/{usuarioId}")
+    public List<PerguntaResponse> getPerguntasDoUsuario(@PathVariable String usuarioId) {
+        return perguntaService.getPerguntasDoUsuario(usuarioId);
+    }
+
     @GetMapping("/curso/{curso}")
     public List<PerguntaResponse> getPerguntasDoCurso(@PathVariable Curso curso) {
         return perguntaService.getPerguntasDoCurso(curso);
