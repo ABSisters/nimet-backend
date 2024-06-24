@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import java.util.List;
 
 public record PerguntaPostRequest(
+        @NotNull String usuarioId,
         @NotNull @Size(max = 200) String titulo,
         @NotNull @Size(max = 200) String detalhes,
         @NotNull List<Tags> tags

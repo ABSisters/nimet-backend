@@ -5,6 +5,7 @@ import absisters.nimet.domain.Resposta;
 import absisters.nimet.domain.Usuario;
 import absisters.nimet.dto.Mapper.RespostaMapper;
 import absisters.nimet.dto.Request.RespostaPostRequest;
+import absisters.nimet.dto.Response.PerguntaResponse;
 import absisters.nimet.dto.Response.RespostaResponse;
 import absisters.nimet.exception.ObjetoNaoExiste;
 import absisters.nimet.exception.PerguntaFechada;
@@ -36,18 +37,18 @@ public class RespostaService {
 
     private static Logger logger = LogManager.getLogger();
 
-    public RespostaResponse create(String usuarioId, String perguntaId, RespostaPostRequest request) {
-        Usuario usuario = usuarioRepository.findByUsuarioId(usuarioId);
+    public RespostaResponse create(RespostaPostRequest request) {
+        Usuario usuario = usuarioRepository.findByUsuarioId(request.usuarioId());
         if(usuario == null){
-            throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+            throw new ObjetoNaoExiste("Usuário", "id", request.usuarioId());
         }
 
-        Pergunta pergunta = perguntaRepository.findByPerguntaId(perguntaId);
+        Pergunta pergunta = perguntaRepository.findByPerguntaId(request.perguntaId());
         if(pergunta == null){
-            throw new ObjetoNaoExiste("Pergunta", "id", perguntaId);
+            throw new ObjetoNaoExiste("Pergunta", "id", request.perguntaId());
         }
         if(pergunta.getStatus() == false){
-            throw new PerguntaFechada(perguntaId);
+            throw new PerguntaFechada(request.perguntaId());
         }
 
         Resposta resposta = respostaRepository.save(
@@ -55,6 +56,19 @@ public class RespostaService {
         logger.info("Usuário com id " + usuario.getUsuarioId() + " adicionou a resposta com id " + resposta.getRespostaId() + " para a pergunta com id " + pergunta.getPerguntaId());
 
         return respostaMapper.to(resposta);
+    }
+
+    public List<RespostaResponse> getRespostasDoUsuario(String usuarioId) {
+        Usuario usuario = usuarioRepository.findByUsuarioId(usuarioId);
+
+        if(usuario == null){
+            throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+        }
+
+        List<Resposta> respostas = respostaRepository.findAllByUsuario(usuario);
+        logger.info("Usuário com id " + usuario.getUsuarioId() + " solicitou as suas respostas");
+
+        return respostaMapper.to(respostas);
     }
 
     public List<RespostaResponse> getRespostasDeUmaPergunta(String perguntaId) {

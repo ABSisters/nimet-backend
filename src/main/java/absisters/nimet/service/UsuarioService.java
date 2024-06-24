@@ -11,7 +11,6 @@ import absisters.nimet.domain.Pergunta;
 import absisters.nimet.domain.Resposta;
 import absisters.nimet.dto.Mapper.UsuarioMapper;
 import absisters.nimet.dto.Request.UsuarioPostRequest;
-import absisters.nimet.dto.Request.UsuarioPutRequest;
 import absisters.nimet.dto.Request.UsuarioPutSenhaRequest;
 import absisters.nimet.dto.Response.UsuarioResponse;
 import absisters.nimet.exception.ObjetoNaoExiste;
@@ -116,15 +115,15 @@ public class UsuarioService {
 	}
 
 
-	public UsuarioResponse update(String usuarioId, UsuarioPutRequest request) {
-		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(usuarioId);
+	public UsuarioResponse update(UsuarioResponse request) {
+		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(request.usuarioId());
 
 		if(mudarUsuario == null){
-			throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+			throw new ObjetoNaoExiste("Usuário", "id", request.usuarioId());
 		}
 
 		if(!Objects.equals(mudarUsuario.getUsername(), request.username())){
-			if(usuarioRepository.existsByUsernameAndUsuarioIdNot(request.username(), usuarioId)){
+			if(usuarioRepository.existsByUsernameAndUsuarioIdNot(request.username(), request.usuarioId())){
 				throw new ObjetoJaExiste("Usuário", "username", request.username());
 			}
 
@@ -132,7 +131,7 @@ public class UsuarioService {
 		}
 
         if(!Objects.equals(mudarUsuario.getEmail(), request.email())){
-			if(usuarioRepository.existsByEmailAndUsuarioIdNot(request.email(), usuarioId)){
+			if(usuarioRepository.existsByEmailAndUsuarioIdNot(request.email(), request.usuarioId())){
 				throw new ObjetoJaExiste("Usuário", "email", request.email());
 			}
 
@@ -154,18 +153,26 @@ public class UsuarioService {
 	}
 
 
-	public UsuarioResponse updateSenha(String usuarioId, UsuarioPutSenhaRequest request) {
-		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(usuarioId);
+	public UsuarioResponse updateSenha(UsuarioPutSenhaRequest request) throws Exception {
+		Usuario mudarUsuario = usuarioRepository.findByUsuarioId(request.usuarioId());
 
 		if(mudarUsuario == null){
-			throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+			throw new ObjetoNaoExiste("Usuário", "id", request.usuarioId());
 		}
 
-		String senha = Hashing.sha256()
-				.hashString(request.senha(), StandardCharsets.UTF_8)
+		String senhaAtual = Hashing.sha256()
+				.hashString(request.senhaAtual(), StandardCharsets.UTF_8)
 				.toString();
 
-		mudarUsuario.setSenha(senha);
+		if(!senhaAtual.equals(mudarUsuario.getSenha())){
+			throw new Exception("Senha errada");
+		}
+
+		String senhaNova = Hashing.sha256()
+				.hashString(request.senhaNova(), StandardCharsets.UTF_8)
+				.toString();
+
+		mudarUsuario.setSenha(senhaNova);
 
 		Usuario usuario = usuarioRepository.save(mudarUsuario);
 		logger.info("Usuário com id " + usuario.getUsuarioId() + " foi mudado.");

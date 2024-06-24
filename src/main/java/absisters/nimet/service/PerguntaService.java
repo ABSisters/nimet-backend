@@ -31,11 +31,11 @@ public class PerguntaService {
 
     private static Logger logger = LogManager.getLogger();
 
-    public PerguntaResponse create(String usuarioId, PerguntaPostRequest request) {
-        Usuario usuario = usuarioRepository.findByUsuarioId(usuarioId);
+    public PerguntaResponse create(PerguntaPostRequest request) {
+        Usuario usuario = usuarioRepository.findByUsuarioId(request.usuarioId());
 
         if(usuario == null){
-            throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+            throw new ObjetoNaoExiste("Usuário", "id", request.usuarioId());
         }
 
         Pergunta pergunta = perguntaRepository.save(
@@ -45,10 +45,35 @@ public class PerguntaService {
         return perguntaMapper.to(pergunta);
     }
 
+    public List<PerguntaResponse> getPerguntasDoUsuario(String usuarioId) {
+        Usuario usuario = usuarioRepository.findByUsuarioId(usuarioId);
+
+        if(usuario == null){
+            throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+        }
+
+        List<Pergunta> perguntas = perguntaRepository.findAllByUsuario(usuario);
+        logger.info("Usuário com id " + usuario.getUsuarioId() + " solicitou as suas perguntas");
+
+        return perguntaMapper.to(perguntas);
+    }
+
     public List<PerguntaResponse> getPerguntasDoCurso(Curso curso) {
         List<Pergunta> perguntas = perguntaRepository.findAllByCurso(curso);
         logger.info("Usuário solicitou as perguntas do curso " + curso);
 
         return perguntaMapper.to(perguntas);
+    }
+
+    public PerguntaResponse getPergunta(String perguntaId) {
+        Pergunta pergunta = perguntaRepository.findByPerguntaId(perguntaId);
+
+        if(pergunta == null){
+            throw new ObjetoNaoExiste("Pergunta", "id", perguntaId);
+        }
+
+        logger.info("Usuário solicitou uma pergunta com id " + perguntaId);
+
+        return perguntaMapper.to(pergunta);
     }
 }
