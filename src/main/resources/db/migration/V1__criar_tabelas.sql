@@ -45,3 +45,19 @@ CREATE TABLE respostas (
     CONSTRAINT usuario_fk FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id),
     CONSTRAINT pergunta_fk FOREIGN KEY (pergunta_id) REFERENCES perguntas(pergunta_id)
 );
+
+CREATE TABLE questoes (
+    questao_id char(32) NOT NULL,
+    curso varchar2(20) NOT NULL,
+    nivel varchar2(20) NOT NULL,
+    questao varchar2(20) NOT NULL,
+    opcoes varchar2(200) NOT NULL,
+    CONSTRAINT questao_pk PRIMARY KEY (questao_id)
+);
+
+CREATE TABLE opcoes (
+    opcao_id char(32) NOT NULL,
+    opcao varchar2(200) NOT NULL,
+    correta number(1) NOT NULL,
+    CONSTRAINT opcao_pk PRIMARY KEY (opcao_id)
+);
