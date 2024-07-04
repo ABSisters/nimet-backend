@@ -29,7 +29,7 @@ INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('136', '34', '
 
 INSERT INTO Questoes (questao_id, curso, nivel, questao) VALUES ('35', 'MECANICA', 'BASICO', 'Quinta pergunta de mecanica básico?');
 INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('137', '35', 'Primeira opcao da quinta pergunta de mecanica básico', 1);
-INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('38', '35', 'Segunda opcao da quinta pergunta de mecanica básico', 0);
+INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('138', '35', 'Segunda opcao da quinta pergunta de mecanica básico', 0);
 INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('139', '35', 'Terceira opcao da quinta pergunta de mecanica básico', 0);
 INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('140', '35', 'Quarta opcao da quinta pergunta de mecanica básico', 0);
 

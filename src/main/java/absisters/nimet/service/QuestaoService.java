@@ -1,15 +1,10 @@
 package absisters.nimet.service;
 
 import absisters.nimet.domain.*;
-import absisters.nimet.dto.Mapper.PerguntaMapper;
 import absisters.nimet.dto.Mapper.QuestaoMapper;
-import absisters.nimet.dto.Request.PerguntaPostRequest;
-import absisters.nimet.dto.Response.PerguntaResponse;
 import absisters.nimet.dto.Response.QuestaoResponse;
 import absisters.nimet.exception.ObjetoNaoExiste;
-import absisters.nimet.repository.PerguntaRepository;
 import absisters.nimet.repository.QuestaoRepository;
-import absisters.nimet.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
