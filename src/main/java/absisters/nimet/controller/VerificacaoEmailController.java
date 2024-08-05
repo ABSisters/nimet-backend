@@ -1,6 +1,5 @@
 package absisters.nimet.controller;
 
-import absisters.nimet.dto.Request.VerificacaoEmailRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class VerificacaoEmailController {
     VerificacaoEmailService verificacaoEmailService;
 
     @PutMapping
-    public ResponseEntity put(@RequestBody @Valid @NotNull VerificacaoEmailRequest token) {
-        return verificacaoEmailService.validarEmail(token);
+    public ResponseEntity put(@RequestBody @Valid @NotNull String token) {
+        return verificacaoEmailService.validarEmail(Integer.parseInt(token));
     }
 }

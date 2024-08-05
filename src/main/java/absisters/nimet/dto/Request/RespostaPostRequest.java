@@ -6,5 +6,5 @@ import jakarta.validation.constraints.Size;
 public record RespostaPostRequest(
         @NotNull String usuarioId,
         @NotNull String perguntaId,
-        @NotNull @Size(max = 200) String resposta
+        @NotNull @Size(max = 600) String resposta
 ) {}
