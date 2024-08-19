@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface QuestaoRepository extends JpaRepository<Questao, String> {
-    List<Questao> findAllByCursoAndNivel(Curso curso, Nivel nivel);
+    Questao findByCursoAndNivelAndQuestaoId(Curso curso, Nivel nivel, String questaoId);
 }
