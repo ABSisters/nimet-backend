@@ -26,9 +26,9 @@ CREATE TABLE perguntas (
     pergunta_id char(32) NOT NULL,
     curso varchar2(20) NOT NULL,
     usuario_id char(32) NOT NULL,
-    titulo varchar2(200) NOT NULL,
-    detalhes varchar2(200) NOT NULL,
-    tags varchar2(200) NOT NULL,
+    titulo varchar2(300) NOT NULL,
+    detalhes varchar2(600) NOT NULL,
+    tags varchar2(600) NOT NULL,
     status number(1) NOT NULL,
     data_criado date NOT NULL,
     CONSTRAINT pergunta_pk PRIMARY KEY (pergunta_id),
@@ -39,9 +39,25 @@ CREATE TABLE respostas (
     resposta_id char(32) NOT NULL,
     usuario_id char(32) NOT NULL,
     pergunta_id char(32) NOT NULL,
-    resposta varchar2(200) NOT NULL,
+    resposta varchar2(600) NOT NULL,
     data_criado date NOT NULL,
     CONSTRAINT resposta_pk PRIMARY KEY (resposta_id),
     CONSTRAINT usuario_fk FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id),
     CONSTRAINT pergunta_fk FOREIGN KEY (pergunta_id) REFERENCES perguntas(pergunta_id)
+);
+
+CREATE TABLE questoes (
+    questao_id char(32) NOT NULL,
+    curso varchar2(20) NOT NULL,
+    nivel varchar2(20) NOT NULL,
+    questao varchar2(20) NOT NULL,
+    opcoes varchar2(600) NOT NULL,
+    CONSTRAINT questao_pk PRIMARY KEY (questao_id)
+);
+
+CREATE TABLE opcoes (
+    opcao_id char(32) NOT NULL,
+    opcao varchar2(600) NOT NULL,
+    correta number(1) NOT NULL,
+    CONSTRAINT opcao_pk PRIMARY KEY (opcao_id)
 );

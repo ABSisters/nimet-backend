@@ -3,7 +3,6 @@ package absisters.nimet.service;
 import java.time.LocalDateTime;
 
 import absisters.nimet.domain.EmailToken;
-import absisters.nimet.dto.Request.VerificacaoEmailRequest;
 import absisters.nimet.repository.EmailTokenRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,11 +30,11 @@ public class VerificacaoEmailService {
     private static Logger logger = LogManager.getLogger();
 
     @SuppressWarnings("rawtypes")
-	public ResponseEntity validarEmail(VerificacaoEmailRequest request) {
-        EmailToken emailToken = emailTokenRepository.findByToken(request.token());
+	public ResponseEntity validarEmail(Integer request) {
+        EmailToken emailToken = emailTokenRepository.findByToken(request);
 
         if (emailToken == null) {
-            throw new ObjetoNaoExiste("EmailToken", "token", request.token().toString());
+            throw new ObjetoNaoExiste("EmailToken", "token", request.toString());
         }
 
         if (emailToken.getDataExpirado().isBefore(LocalDateTime.now())) {

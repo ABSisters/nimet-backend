@@ -111,6 +111,10 @@ public class UsuarioService {
 			throw new Exception("Usuário não encontrado");
 		}
 
+		if (usuario.getEmailValido() == false){
+			throw new Exception("Usuário com email inválido");
+		}
+
 		return usuarioMapper.to(usuario);
 	}
 
