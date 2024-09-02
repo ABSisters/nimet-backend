@@ -33,7 +33,6 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-@Transactional
 public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;

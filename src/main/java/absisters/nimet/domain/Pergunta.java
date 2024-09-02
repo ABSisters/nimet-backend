@@ -18,6 +18,7 @@ public class Pergunta {
     private Curso curso;
 
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     private String titulo;

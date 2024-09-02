@@ -22,7 +22,6 @@ import lombok.extern.log4j.Log4j2;
 
 @Service
 @AllArgsConstructor
-@Log4j2
 public class CleanupService {
 	@Autowired
     private UsuarioRepository usuarioRepository;

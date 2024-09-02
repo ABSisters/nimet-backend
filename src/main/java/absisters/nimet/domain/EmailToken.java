@@ -1,9 +1,6 @@
 package absisters.nimet.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,6 +14,7 @@ public class EmailToken {
     private String tokenId;
 
     @OneToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     private Integer token;

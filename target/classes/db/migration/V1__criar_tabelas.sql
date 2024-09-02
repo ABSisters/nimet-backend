@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
 CREATE TABLE IF NOT EXISTS emailtoken (
     token_id char(32) NOT NULL,
     usuario_id char(32) NOT NULL,
-    token boolean NOT NULL,
+    token integer NOT NULL,
     data_expirado timestamp NOT NULL,
     data_criado timestamp NOT NULL,
     CONSTRAINT token_pk PRIMARY KEY (token_id),
@@ -28,7 +28,6 @@ CREATE TABLE IF NOT EXISTS perguntas (
     usuario_id char(32) NOT NULL,
     titulo varchar(300) NOT NULL,
     detalhes varchar(600) NOT NULL,
-    tags varchar(600) NOT NULL,
     status boolean NOT NULL,
     data_criado timestamp NOT NULL,
     CONSTRAINT pergunta_pk PRIMARY KEY (pergunta_id),
@@ -50,14 +49,16 @@ CREATE TABLE IF NOT EXISTS questoes (
     questao_id char(32) NOT NULL,
     curso varchar(20) NOT NULL,
     nivel varchar(20) NOT NULL,
-    questao varchar(20) NOT NULL,
-    opcoes varchar(600) NOT NULL,
+    questao varchar(400) NOT NULL,
+    opcoes varchar(600),
     CONSTRAINT questao_pk PRIMARY KEY (questao_id)
 );
 
 CREATE TABLE IF NOT EXISTS opcoes (
     opcao_id char(32) NOT NULL,
+    questao_id char(32) NOT NULL,
     opcao varchar(600) NOT NULL,
     correta boolean NOT NULL,
-    CONSTRAINT opcao_pk PRIMARY KEY (opcao_id)
+    CONSTRAINT opcao_pk PRIMARY KEY (opcao_id),
+    CONSTRAINT questao_fk FOREIGN KEY (questao_id) REFERENCES questoes(questao_id)
 );
