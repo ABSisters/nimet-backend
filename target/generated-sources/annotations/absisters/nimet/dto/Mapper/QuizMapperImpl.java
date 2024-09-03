@@ -8,12 +8,14 @@ import absisters.nimet.domain.Usuario;
 import absisters.nimet.dto.Response.QuizResponse;
 import absisters.nimet.dto.Response.UsuarioResponse;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-03T15:17:07-0300",
+    date = "2024-09-03T15:31:59-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 @Component
@@ -44,6 +46,20 @@ public class QuizMapperImpl implements QuizMapper {
         QuizResponse quizResponse = new QuizResponse( quizId, usuario, curso, nivel, acertos, erros, dataCriado );
 
         return quizResponse;
+    }
+
+    @Override
+    public List<QuizResponse> to(List<Quiz> quiz) {
+        if ( quiz == null ) {
+            return null;
+        }
+
+        List<QuizResponse> list = new ArrayList<QuizResponse>( quiz.size() );
+        for ( Quiz quiz1 : quiz ) {
+            list.add( to( quiz1 ) );
+        }
+
+        return list;
     }
 
     protected UsuarioResponse usuarioToUsuarioResponse(Usuario usuario) {

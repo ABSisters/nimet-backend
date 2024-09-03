@@ -14,6 +14,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class QuizService {
@@ -38,6 +40,19 @@ public class QuizService {
         Quiz quiz = quizRepository.save(
                 new Quiz(usuario, request.curso(), request.nivel(), request.acertos(), request.erros()));
         logger.info("Usuário com id " + usuario.getUsuarioId() + " respondeu o quiz de " + quiz.getCurso() + " " + quiz.getNivel());
+
+        return quizMapper.to(quiz);
+    }
+
+    public List<QuizResponse> getQuizDoUsuario(String usuarioId) {
+        Usuario usuario = usuarioRepository.findByUsuarioId(usuarioId);
+
+        if(usuario == null){
+            throw new ObjetoNaoExiste("Usuário", "id", usuarioId);
+        }
+
+        List<Quiz> quiz = quizRepository.findAllByUsuario(usuario);
+        logger.info("Usuário com id " + usuario.getUsuarioId() + " solicitou as suas respostas do quiz");
 
         return quizMapper.to(quiz);
     }

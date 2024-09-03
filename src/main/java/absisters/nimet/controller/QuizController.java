@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/quiz")
 @AllArgsConstructor
@@ -21,4 +23,10 @@ public class QuizController {
     public QuizResponse post(@RequestBody @Valid @NotNull QuizPostRequest quiz) {
         return quizService.create(quiz);
     }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public List<QuizResponse> getQuizDoUsuario(@PathVariable String usuarioId) {
+        return quizService.getQuizDoUsuario(usuarioId);
+    }
+
 }
