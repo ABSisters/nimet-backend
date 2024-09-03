@@ -6,17 +6,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 
-import absisters.nimet.domain.EmailToken;
-import absisters.nimet.domain.Pergunta;
-import absisters.nimet.domain.Resposta;
+import absisters.nimet.domain.*;
 import absisters.nimet.dto.Mapper.UsuarioMapper;
 import absisters.nimet.dto.Request.UsuarioPostRequest;
 import absisters.nimet.dto.Request.UsuarioPutSenhaRequest;
 import absisters.nimet.dto.Response.UsuarioResponse;
 import absisters.nimet.exception.ObjetoNaoExiste;
-import absisters.nimet.repository.EmailTokenRepository;
-import absisters.nimet.repository.PerguntaRepository;
-import absisters.nimet.repository.RespostaRepository;
+import absisters.nimet.repository.*;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
@@ -26,9 +22,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.hash.Hashing;
 
-import absisters.nimet.domain.Usuario;
 import absisters.nimet.exception.ObjetoJaExiste;
-import absisters.nimet.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -51,6 +45,9 @@ public class UsuarioService {
 
 	@Autowired
 	private RespostaRepository respostaRepository;
+
+	@Autowired
+	private QuizRepository quizRepository;
 
 	private EntityManager entityManager;
 
@@ -209,6 +206,14 @@ public class UsuarioService {
 			for (Pergunta pergunta : perguntas){
 				perguntaRepository.delete(pergunta);
 				logger.info("Pergunta com id " + pergunta.getPerguntaId() + " foi deletado em conjunto com o usuario com id " + usuario.getUsuarioId());
+			}
+		}
+
+		List<Quiz> quizes = quizRepository.findAllByUsuario(usuario);
+		if (!quizes.isEmpty()) {
+			for (Quiz quiz : quizes){
+				quizRepository.delete(quiz);
+				logger.info("Quiz com id " + quiz.getQuizId() + " foi deletado em conjunto com o usuario com id " + usuario.getUsuarioId());
 			}
 		}
 
