@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
     username varchar(20) NOT NULL,
     email varchar(256) NOT NULL,
     email_valido boolean NOT NULL,
-    data_nascimento date NOT NULL,
     senha varchar(64) NOT NULL,
     curso varchar(20) NOT NULL CHECK( curso IN ('ELETRONICA','INFORMATICA','MECANICA')),
     tipo_usuario varchar(20) NOT NULL CHECK( tipo_usuario IN ('ESTUDANTE','MODERADOR')),
@@ -50,7 +49,6 @@ CREATE TABLE IF NOT EXISTS questoes (
     curso varchar(20) NOT NULL,
     nivel varchar(20) NOT NULL,
     questao varchar(400) NOT NULL,
-    opcoes varchar(600),
     CONSTRAINT questao_pk PRIMARY KEY (questao_id)
 );
 

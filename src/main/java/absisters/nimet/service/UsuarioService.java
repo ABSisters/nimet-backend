@@ -73,7 +73,7 @@ public class UsuarioService {
 				.toString();
 
 		Usuario usuario = usuarioRepository.save(
-				new Usuario(request.nome(), request.username(), request.email(), request.dataNascimento(), senha, request.curso()));
+				new Usuario(request.nome(), request.username(), request.email(), senha, request.curso()));
 		logger.info("Usuário com id " + usuario.getUsuarioId() + " realizou o cadastro.");
 
 		EmailToken emailToken = emailService.criarToken(usuario);
@@ -146,7 +146,6 @@ public class UsuarioService {
         }
 
 		mudarUsuario.setNome(request.nome());
-		mudarUsuario.setDataNascimento(request.dataNascimento());
 		mudarUsuario.setCurso(request.curso());
 
 		Usuario usuario = usuarioRepository.save(mudarUsuario);
