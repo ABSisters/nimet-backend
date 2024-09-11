@@ -1,63 +1,64 @@
-CREATE TABLE usuarios (
+CREATE TABLE IF NOT EXISTS usuarios (
     usuario_id char(32) NOT NULL,
-    nome varchar2(100) NOT NULL,
-    username varchar2(20) NOT NULL,
-    email varchar2(256) NOT NULL,
-    email_valido number(1) NOT NULL,
+    nome varchar(100) NOT NULL,
+    username varchar(20) NOT NULL,
+    email varchar(256) NOT NULL,
+    email_valido boolean NOT NULL,
     data_nascimento date NOT NULL,
-    senha varchar2(64) NOT NULL,
-    curso varchar2(20) NOT NULL CHECK( curso IN ('ELETRONICA','INFORMATICA','MECANICA')),
-    tipo_usuario varchar2(20) NOT NULL CHECK( tipo_usuario IN ('ESTUDANTE','MODERADOR')),
-    data_criado date NOT NULL,
+    senha varchar(64) NOT NULL,
+    curso varchar(20) NOT NULL CHECK( curso IN ('ELETRONICA','INFORMATICA','MECANICA')),
+    tipo_usuario varchar(20) NOT NULL CHECK( tipo_usuario IN ('ESTUDANTE','MODERADOR')),
+    data_criado timestamp NOT NULL,
     CONSTRAINT usuario_pk PRIMARY KEY (usuario_id)
 );
 
-CREATE TABLE emailtoken (
+CREATE TABLE IF NOT EXISTS emailtoken (
     token_id char(32) NOT NULL,
     usuario_id char(32) NOT NULL,
-    token number(6) NOT NULL,
-    data_expirado date NOT NULL,
-    data_criado date NOT NULL,
+    token integer NOT NULL,
+    data_expirado timestamp NOT NULL,
+    data_criado timestamp NOT NULL,
     CONSTRAINT token_pk PRIMARY KEY (token_id),
     CONSTRAINT usuario_fk FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id)
 );
 
-CREATE TABLE perguntas (
+CREATE TABLE IF NOT EXISTS perguntas (
     pergunta_id char(32) NOT NULL,
-    curso varchar2(20) NOT NULL,
+    curso varchar(20) NOT NULL,
     usuario_id char(32) NOT NULL,
-    titulo varchar2(300) NOT NULL,
-    detalhes varchar2(600) NOT NULL,
-    tags varchar2(600) NOT NULL,
-    status number(1) NOT NULL,
-    data_criado date NOT NULL,
+    titulo varchar(300) NOT NULL,
+    detalhes varchar(600) NOT NULL,
+    status boolean NOT NULL,
+    data_criado timestamp NOT NULL,
     CONSTRAINT pergunta_pk PRIMARY KEY (pergunta_id),
     CONSTRAINT usuario_fk FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id)
 );
 
-CREATE TABLE respostas (
+CREATE TABLE IF NOT EXISTS respostas (
     resposta_id char(32) NOT NULL,
     usuario_id char(32) NOT NULL,
     pergunta_id char(32) NOT NULL,
-    resposta varchar2(600) NOT NULL,
-    data_criado date NOT NULL,
+    resposta varchar(600) NOT NULL,
+    data_criado timestamp NOT NULL,
     CONSTRAINT resposta_pk PRIMARY KEY (resposta_id),
     CONSTRAINT usuario_fk FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id),
     CONSTRAINT pergunta_fk FOREIGN KEY (pergunta_id) REFERENCES perguntas(pergunta_id)
 );
 
-CREATE TABLE questoes (
+CREATE TABLE IF NOT EXISTS questoes (
     questao_id char(32) NOT NULL,
-    curso varchar2(20) NOT NULL,
-    nivel varchar2(20) NOT NULL,
-    questao varchar2(20) NOT NULL,
-    opcoes varchar2(600) NOT NULL,
+    curso varchar(20) NOT NULL,
+    nivel varchar(20) NOT NULL,
+    questao varchar(400) NOT NULL,
+    opcoes varchar(600),
     CONSTRAINT questao_pk PRIMARY KEY (questao_id)
 );
 
-CREATE TABLE opcoes (
+CREATE TABLE IF NOT EXISTS opcoes (
     opcao_id char(32) NOT NULL,
-    opcao varchar2(600) NOT NULL,
-    correta number(1) NOT NULL,
-    CONSTRAINT opcao_pk PRIMARY KEY (opcao_id)
+    questao_id char(32) NOT NULL,
+    opcao varchar(600) NOT NULL,
+    correta boolean NOT NULL,
+    CONSTRAINT opcao_pk PRIMARY KEY (opcao_id),
+    CONSTRAINT questao_fk FOREIGN KEY (questao_id) REFERENCES questoes(questao_id)
 );

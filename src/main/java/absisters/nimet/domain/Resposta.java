@@ -14,9 +14,11 @@ public class Resposta {
     private String respostaId;
 
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @ManyToOne
+    @JoinColumn(name = "pergunta_id")
     private Pergunta pergunta;
 
     private String resposta;
