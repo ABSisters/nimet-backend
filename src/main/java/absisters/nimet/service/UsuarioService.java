@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import absisters.nimet.domain.*;
 import absisters.nimet.dto.Mapper.UsuarioMapper;
+import absisters.nimet.dto.Request.DenunciaPostRequest;
 import absisters.nimet.dto.Request.UsuarioPostRequest;
 import absisters.nimet.dto.Request.UsuarioPutSenhaRequest;
 import absisters.nimet.dto.Response.UsuarioResponse;
@@ -18,6 +19,9 @@ import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.google.common.hash.Hashing;
@@ -48,6 +52,9 @@ public class UsuarioService {
 
 	@Autowired
 	private QuizRepository quizRepository;
+
+	@Autowired
+	private JavaMailSender mailSender;
 
 	private EntityManager entityManager;
 
@@ -219,5 +226,23 @@ public class UsuarioService {
 
 		usuarioRepository.delete(usuario);
 		logger.info("Usuario com id " + usuario.getUsuarioId() + " foi deletado");
+	}
+
+	public ResponseEntity denuncia(DenunciaPostRequest request) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("absisters.dev@gmail.com");
+		message.setTo("absisters.dev@gmail.com");
+		message.setSubject("nimet - Denúncia");
+		message.setText("O usuário com id " + request.usuarioId() +
+				" foi denunciado sobre o seguinte conteúdo: "
+				+ "\n\n" + request.conteudo()
+				+ "\n\nPelo seguinte motivo: "
+				+ "\n\n" + request.motivo());
+
+		mailSender.send(message);
+
+		logger.info("Denúncia foi realizada");
+
+		return ResponseEntity.ok().body(null);
 	}
 }

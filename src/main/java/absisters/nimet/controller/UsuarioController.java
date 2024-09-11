@@ -1,9 +1,11 @@
 package absisters.nimet.controller;
 
+import absisters.nimet.dto.Request.DenunciaPostRequest;
 import absisters.nimet.dto.Request.UsuarioPostRequest;
 import absisters.nimet.dto.Request.UsuarioPutSenhaRequest;
 import absisters.nimet.dto.Response.UsuarioResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import absisters.nimet.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -47,5 +49,10 @@ public class UsuarioController {
 	@DeleteMapping("/deletar/{usuarioId}")
 	public void delete(@PathVariable String usuarioId) {
 		usuarioService.delete(usuarioId);
+	}
+
+	@PostMapping ("/denunciar")
+	public ResponseEntity denunciar (@RequestBody @Valid @NotNull DenunciaPostRequest denuncia) {
+		return usuarioService.denuncia(denuncia);
 	}
 }
