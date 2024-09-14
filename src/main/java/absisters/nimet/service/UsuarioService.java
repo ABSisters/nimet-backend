@@ -6,29 +6,27 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 
-import absisters.nimet.domain.EmailToken;
-import absisters.nimet.domain.Pergunta;
-import absisters.nimet.domain.Resposta;
+import absisters.nimet.domain.*;
 import absisters.nimet.dto.Mapper.UsuarioMapper;
+import absisters.nimet.dto.Request.DenunciaPostRequest;
 import absisters.nimet.dto.Request.UsuarioPostRequest;
 import absisters.nimet.dto.Request.UsuarioPutSenhaRequest;
 import absisters.nimet.dto.Response.UsuarioResponse;
 import absisters.nimet.exception.ObjetoNaoExiste;
-import absisters.nimet.repository.EmailTokenRepository;
-import absisters.nimet.repository.PerguntaRepository;
-import absisters.nimet.repository.RespostaRepository;
+import absisters.nimet.repository.*;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.google.common.hash.Hashing;
 
-import absisters.nimet.domain.Usuario;
 import absisters.nimet.exception.ObjetoJaExiste;
-import absisters.nimet.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -52,6 +50,12 @@ public class UsuarioService {
 	@Autowired
 	private RespostaRepository respostaRepository;
 
+	@Autowired
+	private QuizRepository quizRepository;
+
+	@Autowired
+	private JavaMailSender mailSender;
+
 	private EntityManager entityManager;
 
 	//	@Autowired
@@ -73,7 +77,7 @@ public class UsuarioService {
 				.toString();
 
 		Usuario usuario = usuarioRepository.save(
-				new Usuario(request.nome(), request.username(), request.email(), request.dataNascimento(), senha, request.curso()));
+				new Usuario(request.nome(), request.username(), request.email(), senha, request.curso()));
 		logger.info("Usuário com id " + usuario.getUsuarioId() + " realizou o cadastro.");
 
 		EmailToken emailToken = emailService.criarToken(usuario);
@@ -146,7 +150,6 @@ public class UsuarioService {
         }
 
 		mudarUsuario.setNome(request.nome());
-		mudarUsuario.setDataNascimento(request.dataNascimento());
 		mudarUsuario.setCurso(request.curso());
 
 		Usuario usuario = usuarioRepository.save(mudarUsuario);
@@ -213,7 +216,33 @@ public class UsuarioService {
 			}
 		}
 
+		List<Quiz> quizes = quizRepository.findAllByUsuario(usuario);
+		if (!quizes.isEmpty()) {
+			for (Quiz quiz : quizes){
+				quizRepository.delete(quiz);
+				logger.info("Quiz com id " + quiz.getQuizId() + " foi deletado em conjunto com o usuario com id " + usuario.getUsuarioId());
+			}
+		}
+
 		usuarioRepository.delete(usuario);
 		logger.info("Usuario com id " + usuario.getUsuarioId() + " foi deletado");
+	}
+
+	public ResponseEntity denuncia(DenunciaPostRequest request) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("absisters.dev@gmail.com");
+		message.setTo("absisters.dev@gmail.com");
+		message.setSubject("nimet - Denúncia");
+		message.setText("O usuário com id " + request.usuarioId() +
+				" foi denunciado sobre o seguinte conteúdo: "
+				+ "\n\n" + request.conteudo()
+				+ "\n\nPelo seguinte motivo: "
+				+ "\n\n" + request.motivo());
+
+		mailSender.send(message);
+
+		logger.info("Denúncia foi realizada");
+
+		return ResponseEntity.ok().body(null);
 	}
 }

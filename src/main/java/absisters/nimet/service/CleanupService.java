@@ -3,20 +3,14 @@ package absisters.nimet.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import absisters.nimet.domain.EmailToken;
-import absisters.nimet.domain.Pergunta;
-import absisters.nimet.domain.Resposta;
-import absisters.nimet.repository.EmailTokenRepository;
-import absisters.nimet.repository.PerguntaRepository;
-import absisters.nimet.repository.RespostaRepository;
+import absisters.nimet.domain.*;
+import absisters.nimet.repository.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import absisters.nimet.domain.Usuario;
-import absisters.nimet.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -34,6 +28,9 @@ public class CleanupService {
 
     @Autowired
     private RespostaRepository respostaRepository;
+
+    @Autowired
+    private QuizRepository quizRepository;
 
     private static Logger logger = LogManager.getLogger();
 
@@ -65,6 +62,14 @@ public class CleanupService {
                     for (Pergunta pergunta : perguntas){
                         perguntaRepository.delete(pergunta);
                         logger.info("Pergunta com id " + pergunta.getPerguntaId() + " foi deletado em conjunto com o usuario com id " + usuario.getUsuarioId());
+                    }
+                }
+
+                List<Quiz> quizes = quizRepository.findAllByUsuario(usuario);
+                if (!quizes.isEmpty()) {
+                    for (Quiz quiz : quizes){
+                        quizRepository.delete(quiz);
+                        logger.info("Quiz com id " + quiz.getQuizId() + " foi deletado em conjunto com o usuario com id " + usuario.getUsuarioId());
                     }
                 }
 

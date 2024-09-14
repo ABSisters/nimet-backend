@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
     username varchar(20) NOT NULL,
     email varchar(256) NOT NULL,
     email_valido boolean NOT NULL,
-    data_nascimento date NOT NULL,
     senha varchar(64) NOT NULL,
     curso varchar(20) NOT NULL CHECK( curso IN ('ELETRONICA','INFORMATICA','MECANICA')),
     tipo_usuario varchar(20) NOT NULL CHECK( tipo_usuario IN ('ESTUDANTE','MODERADOR')),
@@ -47,10 +46,9 @@ CREATE TABLE IF NOT EXISTS respostas (
 
 CREATE TABLE IF NOT EXISTS questoes (
     questao_id char(32) NOT NULL,
-    curso varchar(20) NOT NULL,
-    nivel varchar(20) NOT NULL,
+    curso varchar(20) NOT NULL CHECK( curso IN ('ELETRONICA','INFORMATICA','MECANICA')),
+    nivel varchar(20) NOT NULL CHECK( nivel IN ('BASICO','INTERMEDIARIO','AVANCADO')),
     questao varchar(400) NOT NULL,
-    opcoes varchar(600),
     CONSTRAINT questao_pk PRIMARY KEY (questao_id)
 );
 
@@ -61,4 +59,16 @@ CREATE TABLE IF NOT EXISTS opcoes (
     correta boolean NOT NULL,
     CONSTRAINT opcao_pk PRIMARY KEY (opcao_id),
     CONSTRAINT questao_fk FOREIGN KEY (questao_id) REFERENCES questoes(questao_id)
+);
+
+CREATE TABLE IF NOT EXISTS quiz (
+    quiz_id char(32) NOT NULL,
+    usuario_id char(32) NOT NULL,
+    curso varchar(20) NOT NULL CHECK( curso IN ('ELETRONICA','INFORMATICA','MECANICA')),
+    nivel varchar(20) NOT NULL CHECK( nivel IN ('BASICO','INTERMEDIARIO','AVANCADO')),
+    acertos integer NOT NULL,
+    erros integer NOT NULL,
+    data_criado timestamp NOT NULL,
+    CONSTRAINT quiz_pk PRIMARY KEY (quiz_id),
+    CONSTRAINT usuario_fk FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id)
 );

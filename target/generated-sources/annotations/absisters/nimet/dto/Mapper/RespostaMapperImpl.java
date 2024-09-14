@@ -9,7 +9,6 @@ import absisters.nimet.domain.Usuario;
 import absisters.nimet.dto.Response.PerguntaResponse;
 import absisters.nimet.dto.Response.RespostaResponse;
 import absisters.nimet.dto.Response.UsuarioResponse;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-02T15:54:57-0300",
+    date = "2024-09-12T00:33:34-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 @Component
@@ -71,7 +70,6 @@ public class RespostaMapperImpl implements RespostaMapper {
         String username = null;
         String email = null;
         boolean emailValido = false;
-        LocalDate dataNascimento = null;
         Curso curso = null;
         TipoUsuario tipoUsuario = null;
         LocalDateTime dataCriado = null;
@@ -83,12 +81,11 @@ public class RespostaMapperImpl implements RespostaMapper {
         if ( usuario.getEmailValido() != null ) {
             emailValido = usuario.getEmailValido();
         }
-        dataNascimento = usuario.getDataNascimento();
         curso = usuario.getCurso();
         tipoUsuario = usuario.getTipoUsuario();
         dataCriado = usuario.getDataCriado();
 
-        UsuarioResponse usuarioResponse = new UsuarioResponse( usuarioId, nome, username, email, emailValido, dataNascimento, curso, tipoUsuario, dataCriado );
+        UsuarioResponse usuarioResponse = new UsuarioResponse( usuarioId, nome, username, email, emailValido, curso, tipoUsuario, dataCriado );
 
         return usuarioResponse;
     }

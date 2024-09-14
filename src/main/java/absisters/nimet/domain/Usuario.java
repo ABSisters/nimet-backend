@@ -18,7 +18,6 @@ public class Usuario {
     private String username;
     private String email;
     private Boolean emailValido;
-    private LocalDate dataNascimento;
     private String senha;
 
     @Enumerated(EnumType.STRING)
@@ -29,13 +28,12 @@ public class Usuario {
 
     private LocalDateTime dataCriado;
 
-    public Usuario(String nome, String username, String email, LocalDate dataNascimento, String senha, Curso curso){
+    public Usuario(String nome, String username, String email, String senha, Curso curso){
         this.usuarioId = UUID.randomUUID().toString();
         this.nome = nome;
         this.username = username;
         this.email = email;
         this.emailValido = false;
-        this.dataNascimento = dataNascimento;
         this.senha = senha;
         this.curso = curso;
         this.tipoUsuario = TipoUsuario.ESTUDANTE;
@@ -85,14 +83,6 @@ public class Usuario {
 
 	public void setEmailValido(Boolean emailValido) {
 		this.emailValido = emailValido;
-	}
-
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
 	}
 
 	public String getSenha() {
