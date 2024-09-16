@@ -101,10 +101,10 @@
 		        <version>2.13.0</version>
 		        <configuration>
 		            <schemaVersion>v2</schemaVersion>
-		            <resourceGroup>nimet-1726518656168-rg</resourceGroup>
-		            <appName>nimet-1726518656168</appName>
+		            <resourceGroup>ABSisters</resourceGroup>
+		            <appName>nimet-backend</appName>
 		            <pricingTier>B1</pricingTier>
-		            <region>centralus</region>
+		            <region>brazilsouth</region>
 		            <runtime>
 		                <os>Linux</os>
 		                <javaVersion>Java 17</javaVersion>
