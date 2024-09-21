@@ -9,6 +9,4 @@ public class AcessoNegado extends RuntimeException {
 	    
 	   // public AcessoNegado(String tag, Throwable cause) {
 	   //     super(message, cause);
-	    }
-	}
 }

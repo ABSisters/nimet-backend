@@ -16,5 +16,5 @@ public interface PerguntaRepository extends JpaRepository<Pergunta, String> {
     List<Pergunta> findAllByCurso(Curso curso);
     List<Pergunta> findAllByUsuario(Usuario usuario);
     ///List<Pergunta> findByTagOrderByCreatedAtDesc(String tag);
-    List<Pergunta> findByTag(Tags tag);
+    List<Pergunta> findAllByTags(Tags tag);
 }

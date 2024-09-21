@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -34,8 +35,8 @@ public class RespostaController {
         return respostaService.getRespostasDeUmaPergunta(perguntaId);
     }
     
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String respostaId, @RequestParam String usuarioId) {
+    @DeleteMapping("deletar")
+    public ResponseEntity<Void> delete(@RequestParam String respostaId, @RequestParam String usuarioId) {
         respostaService.deleteResposta(respostaId, usuarioId);
         return ResponseEntity.noContent().build();
     }

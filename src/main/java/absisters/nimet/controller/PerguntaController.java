@@ -3,6 +3,7 @@ package absisters.nimet.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import absisters.nimet.domain.Curso;
@@ -48,7 +49,7 @@ public class PerguntaController {
     }
     
     @DeleteMapping("/deletar")
-    public ResponseEntity<Void> deletePergunta(@PathVariable String perguntaId, @RequestParam String usuarioId) {
+    public ResponseEntity<Void> deletePergunta(@RequestParam String perguntaId, @RequestParam String usuarioId) {
         perguntaService.delete(perguntaId, usuarioId);
         return ResponseEntity.noContent().build();
     }
@@ -58,10 +59,9 @@ public class PerguntaController {
     //    return perguntaService.delete(perguntaId, usuarioId);
     //}
     
-    @PutMapping("/fechar/{id}")
-    public ResponseEntity<Void> fecharPergunta(@PathVariable String perguntaId, @RequestParam String usuarioId) {
-        perguntaService.fecharPergunta(perguntaId, usuarioId);
-        return ResponseEntity.noContent().build();
+    @PutMapping("/fechar")
+    public PerguntaResponse fecharPergunta(@RequestParam String perguntaId, @RequestParam String usuarioId) {
+        return perguntaService.fecharPergunta(perguntaId, usuarioId);
     }
 
 }
