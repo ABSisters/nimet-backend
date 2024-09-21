@@ -1,16 +1,19 @@
 package absisters.nimet.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import absisters.nimet.domain.Curso;
+import absisters.nimet.domain.Tags;
 import absisters.nimet.dto.Request.PerguntaPostRequest;
 import absisters.nimet.dto.Response.PerguntaResponse;
 import absisters.nimet.service.PerguntaService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/perguntas")
@@ -38,6 +41,27 @@ public class PerguntaController {
     @GetMapping("/{perguntaId}")
     public PerguntaResponse getPergunta(@PathVariable String perguntaId) {
         return perguntaService.getPergunta(perguntaId);
+    }
+    
+    @GetMapping("/tag/{tag}")
+    public List<PerguntaResponse> getPerguntasPorTag(@PathVariable Tags tag) {
+        return perguntaService.getPerguntaByTag(tag);
+    }
+    
+    @DeleteMapping("/deletar")
+    public ResponseEntity<Void> deletePergunta(@RequestParam String perguntaId, @RequestParam String usuarioId) {
+        perguntaService.delete(perguntaId, usuarioId);
+        return ResponseEntity.noContent().build();
+    }
+    
+    //@DeleteMapping("/deletar/{id}")
+    //public PerguntaResponse delete(@PathVariable String perguntaId, @RequestParam String usuarioId) {
+    //    return perguntaService.delete(perguntaId, usuarioId);
+    //}
+    
+    @PutMapping("/fechar")
+    public PerguntaResponse fecharPergunta(@RequestParam String perguntaId, @RequestParam String usuarioId) {
+        return perguntaService.fecharPergunta(perguntaId, usuarioId);
     }
 
 }
