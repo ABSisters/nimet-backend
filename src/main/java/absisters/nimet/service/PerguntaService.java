@@ -1,21 +1,24 @@
 package absisters.nimet.service;
 
+import java.lang.System.Logger;
+import java.util.List;
+import java.util.logging.LogManager;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import absisters.nimet.domain.Curso;
 import absisters.nimet.domain.Pergunta;
+import absisters.nimet.domain.Tags;
 import absisters.nimet.domain.Usuario;
 import absisters.nimet.dto.Mapper.PerguntaMapper;
 import absisters.nimet.dto.Request.PerguntaPostRequest;
 import absisters.nimet.dto.Response.PerguntaResponse;
+import absisters.nimet.exception.AcessoNegado;
 import absisters.nimet.exception.ObjetoNaoExiste;
 import absisters.nimet.repository.PerguntaRepository;
 import absisters.nimet.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -76,4 +79,48 @@ public class PerguntaService {
 
         return perguntaMapper.to(pergunta);
     }
+    
+   public List<PerguntaResponse> getPerguntaByTag(Tags tags) {
+       List<Pergunta> perguntas = perguntaRepository.findByTag(tags);
+         
+            if (perguntas.isEmpty()) {
+                logger.info("Nenhuma pergunta encontrada para a tag: " + tags);
+            } else {
+                logger.info("Usuário solicitou perguntas com a tag: " + tags);
+            }
+            
+        }
+
+   public void delete(String perguntaId, String usuarioId) {
+        Pergunta pergunta = perguntaRepository.findByPerguntaId(perguntaId);
+
+            if(pergunta == null){
+                throw new ObjetoNaoExiste("Pergunta", "id", perguntaId);
+            }
+
+            if (!pergunta.getUsuario().getUsuarioId().equals(usuarioId)) {
+                throw new AcessoNegado("Usuário não tem permissão para deletar esta pergunta.");
+            }
+            
+            perguntaRepository.deleteById(perguntaId);
+            logger.info("Usuário deletou a pergunta com id " + perguntaId);
+        }
+    
+   public void fecharPergunta(String perguntaId, String usuarioId) {
+       Pergunta pergunta = perguntaRepository.findByPerguntaId(perguntaId);
+
+       if (pergunta == null) {
+           throw new ObjetoNaoExiste("Pergunta", "id", perguntaId);
+       }
+
+       if (!pergunta.getUsuario().getUsuarioId().equals(usuarioId)) {
+           throw new AcessoNegado("Usuário não tem permissão para fechar esta pergunta.");
+       }
+
+       pergunta.setStatus(true);
+       perguntaRepository.save(pergunta);
+       logger.info("Usuário com id " + usuarioId + " fechou a pergunta com id " + perguntaId);
+   }
+}
+   
 }

@@ -33,4 +33,10 @@ public class RespostaController {
     public List<RespostaResponse> getRespostasDeUmaPergunta(@PathVariable String perguntaId) {
         return respostaService.getRespostasDeUmaPergunta(perguntaId);
     }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String respostaId, @RequestParam String usuarioId) {
+        respostaService.deleteResposta(respostaId, usuarioId);
+        return ResponseEntity.noContent().build();
+    }
 }

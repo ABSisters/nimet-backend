@@ -12,4 +12,5 @@ import java.util.List;
 public interface RespostaRepository extends JpaRepository<Resposta, String> {
     List<Resposta> findAllByPergunta(Pergunta pergunta);
     List<Resposta> findAllByUsuario(Usuario usuario);
+    Resposta findByRespostaId(String respostaId);
 }
