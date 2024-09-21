@@ -35,7 +35,7 @@ public class RespostaController {
         return respostaService.getRespostasDeUmaPergunta(perguntaId);
     }
     
-    @DeleteMapping("deletar/{id}")
+    @DeleteMapping("deletar/{respostaId}")
     public ResponseEntity<Void> delete(@PathVariable String respostaId, @RequestParam String usuarioId) {
         respostaService.deleteResposta(respostaId, usuarioId);
         return ResponseEntity.noContent().build();

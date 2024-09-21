@@ -48,7 +48,7 @@ public class PerguntaController {
         return perguntaService.getPerguntaByTag(tag);
     }
     
-    @DeleteMapping("/deletar/{id}")
+    @DeleteMapping("/deletar/{perguntaId}")
     public ResponseEntity<Void> deletePergunta(@PathVariable String perguntaId, @RequestParam String usuarioId) {
         perguntaService.delete(perguntaId, usuarioId);
         return ResponseEntity.noContent().build();
@@ -59,7 +59,7 @@ public class PerguntaController {
     //    return perguntaService.delete(perguntaId, usuarioId);
     //}
     
-    @PutMapping("/fechar/{id}")
+    @PutMapping("/fechar/{perguntaId}")
     public PerguntaResponse fecharPergunta(@PathVariable String perguntaId, @RequestParam String usuarioId) {
         return perguntaService.fecharPergunta(perguntaId, usuarioId);
     }
