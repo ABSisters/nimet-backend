@@ -18,7 +18,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://gray-sand-08a79601e.5.azurestaticapps.net", "http://localhost:4200")
                 .allowedOriginPatterns("*")
                 .allowedHeaders("*")
                 .allowCredentials(true)
