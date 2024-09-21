@@ -9,6 +9,8 @@ COPY target/nimet-0.0.1-SNAPSHOT.jar app.jar
 
 # Expor a porta que a aplicação irá usar
 EXPOSE 80
+EXPOSE 8080
+EXPOSE 5432
 
 # Comando para rodar a aplicação
 CMD ["java", "-jar", "app.jar"]
