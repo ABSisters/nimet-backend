@@ -1,21 +1,23 @@
 package absisters.nimet.service;
 
-import absisters.nimet.domain.Curso;
-import absisters.nimet.domain.Pergunta;
-import absisters.nimet.domain.Usuario;
+import java.util.List;
+
+import absisters.nimet.domain.*;
+import absisters.nimet.repository.RespostaRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import absisters.nimet.dto.Mapper.PerguntaMapper;
 import absisters.nimet.dto.Request.PerguntaPostRequest;
 import absisters.nimet.dto.Response.PerguntaResponse;
+import absisters.nimet.exception.AcessoNegado;
 import absisters.nimet.exception.ObjetoNaoExiste;
 import absisters.nimet.repository.PerguntaRepository;
 import absisters.nimet.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -28,6 +30,9 @@ public class PerguntaService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private RespostaRepository respostaRepository;
 
     private static Logger logger = LogManager.getLogger();
 
@@ -76,4 +81,54 @@ public class PerguntaService {
 
         return perguntaMapper.to(pergunta);
     }
+    
+   public List<PerguntaResponse> getPerguntaByTag(Tags tags) {
+       List<Pergunta> perguntas = perguntaRepository.findAllByTags(tags);
+         
+       if (perguntas.isEmpty()) {
+           logger.info("Nenhuma pergunta encontrada para a tag: " + tags);
+       } else {
+           logger.info("Usuário solicitou perguntas com a tag: " + tags);
+       }
+
+       return perguntaMapper.to(perguntas);
+   }
+
+   public void delete(String perguntaId, String usuarioId) {
+        Pergunta pergunta = perguntaRepository.findByPerguntaId(perguntaId);
+
+        if(pergunta == null){
+            throw new ObjetoNaoExiste("Pergunta", "id", perguntaId);
+        }
+
+        if (!pergunta.getUsuario().getUsuarioId().equals(usuarioId)) {
+            throw new AcessoNegado("Usuário não tem permissão para deletar esta pergunta.");
+        }
+
+        List<Resposta> respostas = respostaRepository.findAllByPergunta(pergunta);
+       if(!respostas.isEmpty()){
+           respostaRepository.deleteAll(respostas);
+       }
+            
+        perguntaRepository.deleteById(perguntaId);
+        logger.info("Usuário deletou a pergunta com id " + perguntaId);
+   }
+    
+   public PerguntaResponse fecharPergunta(String perguntaId, String usuarioId) {
+       Pergunta pergunta = perguntaRepository.findByPerguntaId(perguntaId);
+
+       if (pergunta == null) {
+           throw new ObjetoNaoExiste("Pergunta", "id", perguntaId);
+       }
+
+       if (!pergunta.getUsuario().getUsuarioId().equals(usuarioId)) {
+           throw new AcessoNegado("Usuário não tem permissão para fechar esta pergunta.");
+       }
+
+       pergunta.setStatus(false);
+       perguntaRepository.save(pergunta);
+       logger.info("Usuário com id " + usuarioId + " fechou a pergunta com id " + perguntaId);
+
+       return perguntaMapper.to(pergunta);
+   }
 }
