@@ -1,5 +1,7 @@
 package absisters.nimet.controller;
 
+import absisters.nimet.dto.Request.RemandarEmailRequest;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,5 +20,10 @@ public class VerificacaoEmailController {
     @PutMapping
     public ResponseEntity put(@RequestParam @NotNull String token) {
         return verificacaoEmailService.validarEmail(Integer.parseInt(token));
+    }
+
+    @PutMapping("/token")
+    public ResponseEntity remandarToken(@RequestBody @Valid @NotNull RemandarEmailRequest token) {
+        return verificacaoEmailService.remandarEmail(token);
     }
 }

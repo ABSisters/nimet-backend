@@ -3,6 +3,7 @@ package absisters.nimet.service;
 import java.time.LocalDateTime;
 
 import absisters.nimet.domain.EmailToken;
+import absisters.nimet.dto.Request.RemandarEmailRequest;
 import absisters.nimet.repository.EmailTokenRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,16 +22,19 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class VerificacaoEmailService {
 
-	@Autowired
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Autowired
     private EmailTokenRepository emailTokenRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     private static Logger logger = LogManager.getLogger();
 
     @SuppressWarnings("rawtypes")
-	public ResponseEntity validarEmail(Integer request) {
+    public ResponseEntity validarEmail(Integer request) {
         EmailToken emailToken = emailTokenRepository.findByToken(request);
 
         if (emailToken == null) {
@@ -57,6 +61,27 @@ public class VerificacaoEmailService {
 
         emailTokenRepository.delete(emailToken);
         logger.info("Token com id " + emailToken.getTokenId() + " foi utilizado e deletado");
+
+        return ResponseEntity.ok().body(usuario.getEmailValido());
+    }
+
+    public ResponseEntity remandarEmail(RemandarEmailRequest request) {
+        Usuario usuario = new Usuario();
+
+        if (usuarioRepository.existsByEmail(request.usuario())) {
+            usuario = usuarioRepository.findByEmail(request.usuario());
+
+        } else if (usuarioRepository.existsByUsername(request.usuario())) {
+            usuario = usuarioRepository.findByUsername(request.usuario());
+
+        } else {
+            throw new ObjetoNaoExiste("Usuário", "id", request.usuario());
+        }
+
+        EmailToken emailToken = emailService.criarToken(usuario);
+
+        emailService.mandarEmail(usuario, emailToken);
+        logger.info("Email com token id " + emailToken.getTokenId() + " foi reenviado");
 
         return ResponseEntity.ok().body(usuario.getEmailValido());
     }

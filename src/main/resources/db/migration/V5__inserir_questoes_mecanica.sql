@@ -199,11 +199,11 @@ INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('486', '122', 
 INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('487', '122', 'Um sistema de coordenadas que está sempre em repouso', false);
 INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('488', '122', 'Um sistema de coordenadas que se move com velocidade constante', false);
 
-INSERT INTO Questoes (questao_id, curso, nivel, questao) VALUES ('123', 'MECANICA', 'AVANCADO', 'Terceira pergunta de mecanica avançado?');
-INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('489', '123', 'Primeira opcao da terceira pergunta de mecanica avançado', true);
-INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('490', '123', 'Segunda opcao da terceira pergunta de mecanica avançado', false);
-INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('491', '123', 'Terceira opcao da terceira pergunta de mecanica avançado', false);
-INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('492', '123', 'Quarta opcao da terceira pergunta de mecanica avançado', false);
+INSERT INTO Questoes (questao_id, curso, nivel, questao) VALUES ('123', 'MECANICA', 'AVANCADO', 'Em um sistema termodinâmico fechado, o que acontece com a entropia durante um processo irreversível?');
+INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('489', '123', 'A entropia diminui', false);
+INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('490', '123', 'A entropia aumenta', true);
+INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('491', '123', 'A entropia permanece constante', false);
+INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('492', '123', 'A entropia se divide', false);
 
 INSERT INTO Questoes (questao_id, curso, nivel, questao) VALUES ('124', 'MECANICA', 'AVANCADO', 'Qual é a definição de Hamiltoniana em mecânica clássica?');
 INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('493', '124', 'A energia cinética total do sistema', false);
@@ -217,17 +217,17 @@ INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('498', '125', 
 INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('499', '125', 'A afirmação de que a quantidade de movimento linear de um sistema é conservada', false);
 INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('500', '125', 'A afirmação de que a quantidade de movimento angular de um sistema é conservada', false);
 
-INSERT INTO Questoes (questao_id, curso, nivel, questao) VALUES ('126', 'MECANICA', 'AVANCADO', 'Primeira pergunta de mecanica avançado?');
-INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('501', '126', 'Primeira opcao da primeira pergunta de mecanica avançado', true);
-INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('502', '126', 'Segunda opcao da primeira pergunta de mecanica avançado', false);
-INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('503', '126', 'Terceira opcao da primeira pergunta de mecanica avançado', false);
-INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('504', '126', 'Quarta opcao da primeira pergunta de mecanica avançado', false);
+INSERT INTO Questoes (questao_id, curso, nivel, questao) VALUES ('126', 'MECANICA', 'AVANCADO', 'Na análise de vibrações mecânicas, qual é o impacto de uma frequência de excitação próxima à frequência natural do sistema?');
+INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('501', '126', 'Reduz a amplitude das vibrações', false);
+INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('502', '126', 'Aumenta a amplitude das vibrações (ressonância)', true);
+INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('503', '126', 'Elimina completamente as vibrações', false);
+INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('504', '126', 'As vibrações permanecem a mesma', false);
 
-INSERT INTO Questoes (questao_id, curso, nivel, questao) VALUES ('127', 'MECANICA', 'AVANCADO', 'Segunda pergunta de mecanica avançado?');
-INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('505', '127', 'Primeira opcao da segunda pergunta de mecanica avançado', true);
-INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('506', '127', 'Segunda opcao da segunda pergunta de mecanica avançado', false);
-INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('507', '127', 'Terceira opcao da segunda pergunta de mecanica avançado', false);
-INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('508', '127', 'Quarta opcao da segunda pergunta de mecanica avançado', false);
+INSERT INTO Questoes (questao_id, curso, nivel, questao) VALUES ('127', 'MECANICA', 'AVANCADO', 'Na mecânica dos fluidos, o número de Reynolds é uma medida importante. O que ele indica quando seu valor é alto?');
+INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('505', '127', 'Escoamento laminar', false);
+INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('506', '127', 'Escoamento turbulento', true);
+INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('507', '127', 'Escoamento estacionário', false);
+INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('508', '127', 'Escoamento da água', false);
 
 INSERT INTO Questoes (questao_id, curso, nivel, questao) VALUES ('128', 'MECANICA', 'AVANCADO', 'O que é uma coordenada generalizada?');
 INSERT INTO Opcoes (opcao_id, questao_id, opcao, correta) VALUES ('509', '128', 'Uma coordenada que descreve apenas o movimento translacional de um sistema', false);
