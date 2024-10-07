@@ -9,6 +9,7 @@ import java.util.Objects;
 import absisters.nimet.domain.*;
 import absisters.nimet.dto.Mapper.UsuarioMapper;
 import absisters.nimet.dto.Request.DenunciaPostRequest;
+import absisters.nimet.dto.Request.LoginRequest;
 import absisters.nimet.dto.Request.UsuarioPostRequest;
 import absisters.nimet.dto.Request.UsuarioPutSenhaRequest;
 import absisters.nimet.dto.Response.UsuarioResponse;
@@ -88,23 +89,23 @@ public class UsuarioService {
 	}
 
 
-	public UsuarioResponse login(String login, String senha) throws Exception {
+	public UsuarioResponse login(LoginRequest request) throws Exception {
 
 		Usuario usuario = new Usuario();
 
         String senhaCriptografada = Hashing.sha256()
-                .hashString(senha, StandardCharsets.UTF_8)
+                .hashString(request.senha(), StandardCharsets.UTF_8)
                 .toString();
 
-		if (usuarioRepository.existsByEmail(login)) {
-			usuario = usuarioRepository.loginByEmail(login, senhaCriptografada);
+		if (usuarioRepository.existsByEmail(request.login())) {
+			usuario = usuarioRepository.loginByEmail(request.login(), senhaCriptografada);
 			if(usuario != null){
 				logger.info("Usuário logado com email");
 			} else {
 				throw new Exception("Usuário não encontrado");
 			}
-		} else if (usuarioRepository.existsByUsername(login)) {
-			usuario = usuarioRepository.loginByUsername(login, senhaCriptografada);
+		} else if (usuarioRepository.existsByUsername(request.login())) {
+			usuario = usuarioRepository.loginByUsername(request.login(), senhaCriptografada);
 			if(usuario != null){
 				logger.info("Usuário logado com username");
 			} else {

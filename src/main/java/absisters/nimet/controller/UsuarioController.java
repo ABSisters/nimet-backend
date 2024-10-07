@@ -1,6 +1,7 @@
 package absisters.nimet.controller;
 
 import absisters.nimet.dto.Request.DenunciaPostRequest;
+import absisters.nimet.dto.Request.LoginRequest;
 import absisters.nimet.dto.Request.UsuarioPostRequest;
 import absisters.nimet.dto.Request.UsuarioPutSenhaRequest;
 import absisters.nimet.dto.Response.UsuarioResponse;
@@ -31,9 +32,8 @@ public class UsuarioController {
 	}
 
 	@PostMapping ("/logar")
-	public UsuarioResponse logar (@RequestParam (value = "login") String login,
-								  @RequestParam ("senha") String senha) throws Exception {
-		return usuarioService.login(login, senha);
+	public UsuarioResponse logar (@RequestBody @Valid @NotNull LoginRequest login) throws Exception {
+		return usuarioService.login(login);
 	}
 
 	@PutMapping("/mudar")
